@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+AutoUpdate-Show-In-Client: true
+OpenIDE-Module-Long-Description: A Plugin which adds support for SQL-Formatting and the abillity to copy JS-Paste-Ready Sql-Strings
+  <p style="font-weight: bold;">Changelog</p>
+  <p style="font-weight: bold;">v.1.0</p>
+  Initial Release
+OpenIDE-Module-Short-Description: Plugin that adds SQL-Formatting support
+OpenIDE-Module-Display-Category: ADITO / SQL

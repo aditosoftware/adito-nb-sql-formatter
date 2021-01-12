@@ -1,5 +1,5 @@
 import de.adito.nbm.sqlformatter.Settings;
-import de.adito.nbm.sqlformatter.gui.options.SqlFormatterOptionsPanel;
+import de.adito.nbm.sqlformatter.gui.options.SQLFormatterOptionsPanel;
 import org.junit.Test;
 
 import javax.swing.*;
@@ -10,11 +10,14 @@ public class GUI
 	@Test
 	public void runOptionsPanel() throws InterruptedException
 	{
-		SqlFormatterOptionsPanel optionsPanel = new SqlFormatterOptionsPanel();
+		SQLFormatterOptionsPanel optionsPanel = new SQLFormatterOptionsPanel();
+		JPanel panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+		panel.add(optionsPanel);
 
 		JFrame frame = new JFrame("OptionsPanel");
 		frame.setPreferredSize(new Dimension(700, 500));
-		frame.setContentPane(optionsPanel);
+		frame.setContentPane(panel);
 		frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);

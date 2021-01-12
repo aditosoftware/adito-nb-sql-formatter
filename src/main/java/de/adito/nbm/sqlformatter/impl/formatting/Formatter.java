@@ -29,7 +29,7 @@ public class Formatter implements IFormatter
 	private final TextBuilder text;
 
 	/**
-	 * The curr Token
+	 * The current Token
 	 */
 	private Token curr = null;
 
@@ -101,13 +101,13 @@ public class Formatter implements IFormatter
 			switch (curr.type)
 			{
 				case RESERVED:
-					if (curr.text.toUpperCase().equals("CASE"))
+					if (curr.text.equalsIgnoreCase("CASE"))
 					{
 						if (last.isText()) text.write(" ");
 						text.write(curr.format(settings));
 						text.incIndent(1);
 					}
-					else if (curr.text.toUpperCase().equals("END"))
+					else if (curr.text.equalsIgnoreCase("END"))
 					{
 						text.decIndent(1);
 						text.singleNewline();

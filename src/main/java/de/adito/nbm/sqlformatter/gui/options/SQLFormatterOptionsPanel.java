@@ -6,13 +6,15 @@ import de.adito.nbm.sqlformatter.Settings;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Options GUI for SQL Formatter
  *
  * @author p.neub, 01.12.2020
  */
-public class SqlFormatterOptionsPanel extends JPanel
+public class SQLFormatterOptionsPanel extends JPanel
 {
 	private final JTextArea inputSql = new JTextArea("select mIN(1,2), case when blA then 12 when TTt then 11 else 66 end,asdDDsd,(select * from bla where bla = 4),max(test, 1,2),ABc from TaaaaBLE where T.E ='12' and 4 join BLA on 1=2");
 	private final JTextArea outputSql = new JTextArea();
@@ -25,17 +27,28 @@ public class SqlFormatterOptionsPanel extends JPanel
 	/**
 	 * Initializes the GUI
 	 */
-	public SqlFormatterOptionsPanel()
+	public SQLFormatterOptionsPanel()
 	{
+		setLayout(new GridLayout(1, 2));
+		setPreferredSize(new Dimension(880, 380));
+
+		JPanel leftPanel = new JPanel();
+		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));
+		addConfigComponent(leftPanel, "Indent Mode", indentMode);
+		addConfigComponent(leftPanel, "Line Ending", lineEnding);
+		addConfigComponent(leftPanel, "Word Case", wordCaseMode);
+		addConfigComponent(leftPanel, "Keyword Case", keywordCaseMode);
+		add(leftPanel);
+
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new GridLayout(2, 1));
+		JScrollPane inputScrollPane = new JScrollPane(inputSql);
+		rightPanel.add(inputScrollPane);
+
 		outputSql.setEditable(false);
-
-		add(inputSql);
-		add(outputSql);
-
-		add(indentMode);
-		add(lineEnding);
-		add(wordCaseMode);
-		add(keywordCaseMode);
+		JScrollPane outputScrollPane = new JScrollPane(outputSql);
+		rightPanel.add(outputScrollPane);
+		add(rightPanel);
 
 		_update();
 		inputSql.getDocument().addDocumentListener(new DocumentListener()
@@ -58,6 +71,18 @@ public class SqlFormatterOptionsPanel extends JPanel
 				_update();
 			}
 		});
+	}
+
+	private <T extends JComboBox<E>, E> void addConfigComponent(JPanel panel, String text, T component)
+	{
+		component.addActionListener(e -> _update());
+		JPanel componentPanel = new JPanel();
+		componentPanel.setLayout(new GridLayout(1, 1));
+		componentPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 25));
+		componentPanel.add(new JLabel(text));
+		componentPanel.add(component);
+		panel.add(componentPanel);
+		panel.add(Box.createRigidArea(new Dimension(0, 3)));
 	}
 
 	/**

@@ -88,7 +88,7 @@ public class Token
 	 * @param pText the text of the second token
 	 * @return true if the tokens equals each other, otherwise false
 	 */
-	public boolean check(TokenType pType, String pText) // TODO overload equals
+	public boolean check(TokenType pType, String pText)
 	{
 		return type == pType && text.equals(pText);
 	}

@@ -11,7 +11,7 @@ import org.netbeans.modules.editor.indent.spi.ReformatTask;
  */
 @SuppressWarnings("unused") // Netbeans
 @MimeRegistration(mimeType = "text/x-sql", service = ReformatTask.Factory.class)
-public class SqlReformatTaskFactory implements ReformatTask.Factory
+public class SQLReformatTaskFactory implements ReformatTask.Factory
 {
 	/**
 	 * Called by NetBeans
@@ -22,6 +22,6 @@ public class SqlReformatTaskFactory implements ReformatTask.Factory
 	@Override
 	public ReformatTask createTask(Context pContext)
 	{
-		return new SqlReformatTask(pContext);
+		return new SQLReformatTask(pContext);
 	}
 }

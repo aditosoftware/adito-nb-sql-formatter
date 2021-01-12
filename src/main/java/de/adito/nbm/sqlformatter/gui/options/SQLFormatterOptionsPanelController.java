@@ -11,9 +11,9 @@ import java.beans.PropertyChangeListener;
 
 @SuppressWarnings("unused") // NetBeans
 @OptionsPanelController.SubRegistration(location = OptionsDisplayer.EDITOR, displayName = "Sql Formatter")
-public class SqlFormatterOptionsPanelController extends OptionsPanelController
+public class SQLFormatterOptionsPanelController extends OptionsPanelController
 {
-	private final SqlFormatterOptionsPanel panel = new SqlFormatterOptionsPanel();
+	private final SQLFormatterOptionsPanel panel = new SQLFormatterOptionsPanel();
 
 	@Override
 	public void update()

@@ -14,7 +14,7 @@ import javax.swing.text.Document;
  *
  * @author p.neub, 01.12.2020
  */
-public class SqlReformatTask implements ReformatTask
+public class SQLReformatTask implements ReformatTask
 {
 	/**
 	 * Context information for both indentation and reformatting.
@@ -26,7 +26,7 @@ public class SqlReformatTask implements ReformatTask
 	 *
 	 * @param pContext Context information for both indentation and reformatting.
 	 */
-	public SqlReformatTask(Context pContext)
+	public SQLReformatTask(Context pContext)
 	{
 		context = pContext;
 	}

@@ -104,6 +104,7 @@ public class Formatter implements IFormatter
       switch (curr.getType())
       {
         case RESERVED:
+          _writeSpacing();
           if (curr.getText().equalsIgnoreCase("CASE"))
           {
             if (last.getType().isText()) text.write(" ");
@@ -118,7 +119,6 @@ public class Formatter implements IFormatter
           }
           else
           {
-            _writeSpacing();
             text.write(curr.format(settings));
           }
           break;

@@ -4,7 +4,14 @@
 		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>de.adito.nbm</groupId>
+	<parent>
+		<groupId>de.adito.nbm</groupId>
+		<artifactId>NbPluginBuildSectionParent</artifactId>
+		<version>1.0.1</version>
+		<relativePath/>
+	</parent>
+
+	<groupId>de.adito.aditoweb.nbm</groupId>
 	<artifactId>SqlFormatter</artifactId>
 	<version>1.0.0</version>
 	<packaging>nbm</packaging>
@@ -152,7 +159,7 @@
 		</dependency>
 	</dependencies>
 
-	<build>
+	<!--build>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.netbeans.utilities</groupId>
@@ -199,5 +206,5 @@
 				<version>3.0.0-M5</version>
 			</plugin>
 		</plugins>
-	</build>
+	</build-->
 </project>

@@ -8,9 +8,9 @@ import org.openide.util.NbBundle;
  */
 public enum EIndentMode
 {
-  TAB("  ", NbBundle.getMessage(EIndentMode.class, "LBL_EIndentMode_TAB")),
-  SPACE_2("    ", NbBundle.getMessage(EIndentMode.class, "LBL_EIndentMode_SPACE_2")),
-  SPACE_4("\t", NbBundle.getMessage(EIndentMode.class, "LBL_EIndentMode_SPACE_4"));
+  TAB("\t", NbBundle.getMessage(EIndentMode.class, "LBL_EIndentMode_TAB")),
+  SPACE_2("  ", NbBundle.getMessage(EIndentMode.class, "LBL_EIndentMode_SPACE_2")),
+  SPACE_4("    ", NbBundle.getMessage(EIndentMode.class, "LBL_EIndentMode_SPACE_4"));
 
   private final String indent;
   private final String description;

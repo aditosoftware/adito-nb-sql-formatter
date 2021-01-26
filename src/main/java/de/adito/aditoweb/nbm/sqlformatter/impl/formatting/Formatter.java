@@ -84,7 +84,8 @@ public class Formatter implements IFormatter
     if (last.check(ETokenType.SYMBOL, "(") || curr.check(ETokenType.SYMBOL, ")"))
       return;
 
-    if(last.check(ETokenType.SYMBOL, "`") || curr.check(ETokenType.SYMBOL, "`"))
+    if(curr.getType().isText() && last.check(ETokenType.SYMBOL, "`") ||
+        last.getType().isText() && curr.check(ETokenType.SYMBOL, "`"))
       return;
 
     if (last.check(ETokenType.SYMBOL, ","))

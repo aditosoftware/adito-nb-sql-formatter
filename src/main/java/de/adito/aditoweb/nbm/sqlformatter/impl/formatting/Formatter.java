@@ -159,7 +159,8 @@ public class Formatter implements IFormatter
     _writeSpacing();
     if ("CASE".equalsIgnoreCase(curr.getText()))
     {
-      if (last.getType().isText()) text.write(" ");
+      if (text.spacingAllowed() && last.getType().isText())
+        text.write(" ");
       text.write(curr.format(settings));
       text.incIndent(1);
     }

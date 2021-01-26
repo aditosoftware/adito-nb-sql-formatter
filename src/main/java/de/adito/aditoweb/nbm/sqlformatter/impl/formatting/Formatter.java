@@ -97,7 +97,7 @@ public class Formatter implements IFormatter
   /**
    * Implementation of the core formatting algorithm
    * <p>
-   * This function loops through all tokens and decides if an how many spaces/line breaks
+   * This function loops through all tokens and decides if and how many spaces/line breaks
    * needs to be written before and after the token
    *
    * @return The formatted SQL

@@ -39,6 +39,8 @@ public class Formatter implements IFormatter
    */
   private Token last = null;
 
+  private boolean parenListStyle = true;
+
   /**
    * Constructor of the Formatter
    *
@@ -81,8 +83,20 @@ public class Formatter implements IFormatter
 
     if (last.getType().isText() && curr.check(ETokenType.SYMBOL, "("))
       return;
-    if (last.check(ETokenType.SYMBOL, "(") || curr.check(ETokenType.SYMBOL, ")"))
+    if(last.check(ETokenType.SYMBOL, "(")) {
+      if(parenListStyle) {
+        text.singleNewline();
+      }
       return;
+    }
+    if (curr.check(ETokenType.SYMBOL, ")")) {
+      text.singleNewline();
+      text.decIndent(2);
+      if (!parenListStyle)
+        text.incIndent(0);
+      parenListStyle = false;
+      return;
+    }
 
     if(curr.getType().isText() && last.check(ETokenType.SYMBOL, "`") ||
         last.getType().isText() && curr.check(ETokenType.SYMBOL, "`"))
@@ -105,8 +119,6 @@ public class Formatter implements IFormatter
   @NotNull
   public String format()
   {
-    boolean indentCompressFlag = true;
-
     while (true)
     {
       curr = (Token) tokenizer.next();
@@ -116,19 +128,13 @@ public class Formatter implements IFormatter
 
       if (curr.check(ETokenType.SYMBOL, "("))
       {
-        if (last.getType().isText()) indentCompressFlag = true;
+        if (last.getType().isText()) parenListStyle = true;
         else
         {
           text.decIndent(0);
-          indentCompressFlag = false;
+          parenListStyle = false;
         }
         text.incIndent(2);
-      }
-      if (curr.check(ETokenType.SYMBOL, ")"))
-      {
-        text.decIndent(2);
-        if (!indentCompressFlag)
-          text.incIndent(0);
       }
       last = curr;
     }
@@ -157,22 +163,19 @@ public class Formatter implements IFormatter
   private void _handleReserved()
   {
     _writeSpacing();
-    if ("CASE".equalsIgnoreCase(curr.getText()))
-    {
-      if (text.spacingAllowed() && last.getType().isText())
-        text.write(" ");
-      text.write(curr.format(settings));
-      text.incIndent(1);
-    }
-    else if ("END".equalsIgnoreCase(curr.getText()))
-    {
-      text.decIndent(1);
-      text.singleNewline();
-      text.write(curr.format(settings));
-    }
-    else
-    {
-      text.write(curr.format(settings));
+    switch (curr.getText().toUpperCase()) {
+      case "CASE":
+        text.write(curr.format(settings));
+        text.incIndent(2);
+        break;
+      case "END":
+        text.decIndent(2);
+        text.singleNewline();
+        text.write(curr.format(settings));
+        break;
+      default:
+        text.write(curr.format(settings));
+        break;
     }
   }
 

@@ -21,6 +21,7 @@ public interface ISQLConstants
   List<String> RESERVED_WRAPPING_WORDS = Arrays.asList(
       "AND", "OR", "XOR",
       "ADD", "TO DISK",
-      "WHEN", "ELSE"
+      "WHEN", "ELSE",
+      "VALUES"
   );
 }

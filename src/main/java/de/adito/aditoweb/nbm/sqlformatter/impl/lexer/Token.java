@@ -4,6 +4,8 @@ import de.adito.aditoweb.nbm.sqlformatter.api.IToken;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 /**
  * Represents a SQL literal
  *
@@ -87,5 +89,20 @@ public class Token implements IToken
   public boolean check(@NotNull ETokenType pType, @NotNull String pText)
   {
     return type == pType && text.equals(pText);
+  }
+
+  @Override
+  public String toString()
+  {
+    return "Token(" + type + ":" + text + ")";
+  }
+
+  @Override
+  public boolean equals(Object pO)
+  {
+    if (this == pO) return true;
+    if (pO == null || getClass() != pO.getClass()) return false;
+    Token token = (Token) pO;
+    return type == token.type && Objects.equals(text, token.text);
   }
 }

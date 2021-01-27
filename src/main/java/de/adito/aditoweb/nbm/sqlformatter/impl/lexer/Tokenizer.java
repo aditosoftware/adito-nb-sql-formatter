@@ -48,6 +48,7 @@ public class Tokenizer implements ITokenizer
 
   /**
    * Returns the next token
+   * Returns null if the end of text is reached
    *
    * @return the next token
    */

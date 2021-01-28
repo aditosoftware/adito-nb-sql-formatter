@@ -70,10 +70,10 @@ public class Settings
   {
     Settings defaultSetting = new Settings();
     return new Settings(
-        EIndentMode.values()[_PREFERENCES.getInt("indentMode", defaultSetting.indentMode.ordinal())],
-        ELineEnding.values()[_PREFERENCES.getInt("lineEnding", defaultSetting.lineEnding.ordinal())],
-        ELetterCaseMode.values()[_PREFERENCES.getInt("wordCaseMode", defaultSetting.wordCaseMode.ordinal())],
-        ELetterCaseMode.values()[_PREFERENCES.getInt("keywordCaseMode", defaultSetting.keywordCaseMode.ordinal())]
+        EIndentMode.valueOf(_PREFERENCES.get("indentMode", defaultSetting.indentMode.name())),
+        ELineEnding.valueOf(_PREFERENCES.get("lineEnding", defaultSetting.lineEnding.name())),
+        ELetterCaseMode.valueOf(_PREFERENCES.get("wordCaseMode", defaultSetting.wordCaseMode.name())),
+        ELetterCaseMode.valueOf(_PREFERENCES.get("keywordCaseMode", defaultSetting.keywordCaseMode.name()))
     );
   }
 
@@ -84,10 +84,10 @@ public class Settings
    */
   public static void setSettings(@NotNull Settings settings)
   {
-    _PREFERENCES.putInt("indentMode", settings.indentMode.ordinal());
-    _PREFERENCES.putInt("lineEnding", settings.lineEnding.ordinal());
-    _PREFERENCES.putInt("wordCaseMode", settings.wordCaseMode.ordinal());
-    _PREFERENCES.putInt("keywordCaseMode", settings.keywordCaseMode.ordinal());
+    _PREFERENCES.put("indentMode", settings.indentMode.name());
+    _PREFERENCES.put("lineEnding", settings.lineEnding.name());
+    _PREFERENCES.put("wordCaseMode", settings.wordCaseMode.name());
+    _PREFERENCES.put("keywordCaseMode", settings.keywordCaseMode.name());
   }
 
   /**

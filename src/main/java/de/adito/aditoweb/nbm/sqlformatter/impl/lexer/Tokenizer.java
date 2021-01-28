@@ -11,7 +11,7 @@ import java.util.function.*;
  *
  * @author p.neub, 01.12.2020
  */
-public class Tokenizer implements ITokenizer
+public class Tokenizer implements ITokenizer<Token>
 {
   private final String text;
   private int pos = 0;

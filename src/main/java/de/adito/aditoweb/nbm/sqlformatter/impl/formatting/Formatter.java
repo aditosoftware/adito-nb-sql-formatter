@@ -17,7 +17,7 @@ public class Formatter implements IFormatter
   /**
    * The tokenizer holding the input SQL
    */
-  private final ITokenizer tokenizer;
+  private final ITokenizer<Token> tokenizer;
 
   /**
    * The settings which are needed for formatting the SQL
@@ -47,7 +47,7 @@ public class Formatter implements IFormatter
    * @param pTokenizer The Tokenizer holding the input SQL
    * @param pSettings  The settings which are needed for formatting the SQL
    */
-  public Formatter(@NotNull ITokenizer pTokenizer, @NotNull Settings pSettings)
+  public Formatter(@NotNull ITokenizer<Token> pTokenizer, @NotNull Settings pSettings)
   {
     tokenizer = pTokenizer;
     settings = pSettings;
@@ -121,7 +121,7 @@ public class Formatter implements IFormatter
   {
     while (true)
     {
-      curr = (Token) tokenizer.next();
+      curr = tokenizer.next();
       if (curr == null)
         return text.finish();
       _handle();

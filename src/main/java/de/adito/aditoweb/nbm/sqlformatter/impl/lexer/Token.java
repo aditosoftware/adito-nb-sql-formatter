@@ -11,7 +11,7 @@ import java.util.Objects;
  *
  * @author p.neub, 01.12.2020
  */
-public class Token implements IToken
+public class Token implements IToken<ETokenType>
 {
   /**
    * the type of the token
@@ -104,5 +104,11 @@ public class Token implements IToken
     if (pO == null || getClass() != pO.getClass()) return false;
     Token token = (Token) pO;
     return type == token.type && Objects.equals(text, token.text);
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(type, text);
   }
 }

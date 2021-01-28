@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
  * Representation for any kind of Token
  *
  * @param <T> The TokenType
- *
  * @author p.neub, 12.01.2021
  */
 public interface IToken<T>

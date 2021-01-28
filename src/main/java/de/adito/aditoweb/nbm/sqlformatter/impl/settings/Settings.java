@@ -3,6 +3,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl.settings;
 import org.jetbrains.annotations.NotNull;
 import org.openide.util.NbPreferences;
 
+import java.util.Objects;
 import java.util.prefs.Preferences;
 
 /**
@@ -134,39 +135,19 @@ public class Settings
     return keywordCaseMode;
   }
 
-  /**
-   * Overrides the equals method
-   * used to check if the settings have been changed
-   *
-   * @param o the second settings object
-   * @return whether the settings are equal or not
-   */
   @Override
-  public boolean equals(Object o)
+  public boolean equals(Object pO)
   {
-    if (this == o) return true;
-    if (o == null || getClass() != o.getClass()) return false;
-
-    Settings settings = (Settings) o;
-
-    if (indentMode != settings.indentMode) return false;
-    if (lineEnding != settings.lineEnding) return false;
-    if (wordCaseMode != settings.wordCaseMode) return false;
-    return keywordCaseMode == settings.keywordCaseMode;
+    if (this == pO) return true;
+    if (pO == null || getClass() != pO.getClass()) return false;
+    Settings settings = (Settings) pO;
+    return indentMode == settings.indentMode && lineEnding == settings.lineEnding &&
+        wordCaseMode == settings.wordCaseMode && keywordCaseMode == settings.keywordCaseMode;
   }
 
-  /**
-   * Generates a 'unique' hash for each setting
-   *
-   * @return the 'unique' hash
-   */
   @Override
   public int hashCode()
   {
-    int result = indentMode.hashCode();
-    result = 31 * result + lineEnding.hashCode();
-    result = 31 * result + wordCaseMode.hashCode();
-    result = 31 * result + keywordCaseMode.hashCode();
-    return result;
+    return Objects.hash(indentMode, lineEnding, wordCaseMode, keywordCaseMode);
   }
 }

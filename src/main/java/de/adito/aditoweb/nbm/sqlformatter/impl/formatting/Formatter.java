@@ -101,7 +101,7 @@ public class Formatter implements IFormatter
       case ";":
         pFmt.text.write(pFmt.curr.getText());
         pFmt.text.singleNewline();
-        pFmt. text.newline();
+        pFmt.text.newline();
         break;
       default:
         pFmt.text.write(pFmt.curr.getText());

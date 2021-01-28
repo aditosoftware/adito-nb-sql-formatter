@@ -70,7 +70,8 @@ public class Tokenizer implements ITokenizer<Token>
       return _readString(currChar);
 
     // Tokenize comments (ETokenType.COMMENT)
-    if (pos + 1 < text.length()) {
+    if (pos + 1 < text.length())
+    {
       switch (text.substring(pos, pos + 2))
       {
         case "--":
@@ -116,7 +117,7 @@ public class Tokenizer implements ITokenizer<Token>
           Character.isAlphabetic(ch) || Character.isDigit(ch), true);
 
       // Check for ETokenType.KEYWORD
-      if(ISQLConstants.KEYWORDS.contains(word.toUpperCase()))
+      if (ISQLConstants.KEYWORDS.contains(word.toUpperCase()))
         return new Token(ETokenType.KEYWORD, word);
 
       // Otherwise return the word Token

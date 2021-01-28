@@ -63,7 +63,7 @@ public class Lexer
    * Tokenizes a file and compares the result with the specified tokens
    * if they don't match the test will fail
    *
-   * @param pName the name of the test sql file
+   * @param pName   the name of the test sql file
    * @param pTokens the expected tokens
    */
   private void testFile(String pName, List<Token> pTokens)

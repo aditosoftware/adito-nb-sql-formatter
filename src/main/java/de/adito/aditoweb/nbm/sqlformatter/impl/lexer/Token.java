@@ -66,9 +66,9 @@ public class Token implements IToken<ETokenType>
   @NotNull
   public String format(@NotNull Settings pSettings)
   {
-    if(type.isKeyword == null)
+    if (type.isKeyword == null)
       return text;
-    if(type.isKeyword)
+    if (type.isKeyword)
       return pSettings.getKeywordCaseMode().format(text);
     else
       return pSettings.getWordCaseMode().format(text);

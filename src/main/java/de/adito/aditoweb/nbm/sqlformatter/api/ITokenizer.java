@@ -1,5 +1,7 @@
 package de.adito.aditoweb.nbm.sqlformatter.api;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Provides an interface, for implementing any kind of Interface
  *
@@ -14,5 +16,6 @@ public interface ITokenizer<T extends IToken<?>>
    *
    * @return the next token
    */
+  @NotNull
   T next();
 }

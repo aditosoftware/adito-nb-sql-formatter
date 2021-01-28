@@ -1,5 +1,10 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.lexer;
 
+import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
+import org.jetbrains.annotations.*;
+
+import java.util.function.*;
+
 /**
  * List of TokenTypes
  */
@@ -8,62 +13,80 @@ public enum ETokenType
   /**
    * A line comment e.g. // some comment
    */
-  LINE_COMMENT(false),
+  LINE_COMMENT(null, Formatter::handleDefault),
 
   /**
    * A block comment
    */
-  BLOCK_COMMENT(false),
+  BLOCK_COMMENT(null, Formatter::handleDefault),
 
   /**
    * A String e.g. "some text"
    */
-  STRING(false),
+  STRING(null, Formatter::handleDefault),
 
   /**
    * A number e.g. 123
    */
-  NUMBER(false),
+  NUMBER(null, Formatter::handleDefault),
 
   /**
    * A word e.g. CONTACT_ID
    */
-  WORD(true),
+  WORD(false, Formatter::handleDefault),
 
   /**
    * A reserved word e.g. max
    */
-  RESERVED(true),
+  KEYWORD(true, Formatter::handleKeyword),
 
   /**
    * A reserved toplevel word e.g. select
    */
-  RESERVED_TOPLEVEL(true),
+  KW_TOPLEVEL(true, Formatter::handleKWTopLevel),
+
+  /**
+   * A reserved lazytoplevel word e.g. 'from' or any form of 'join'
+   */
+  KW_LAZYTOPLEVEL(true, Formatter::handleKWLazyTopLevel),
 
   /**
    * A reserved wrapping word e.g. where
    */
-  RESERVED_WRAPPING(true),
+  KW_WRAPPING(true, Formatter::handleKWWrapping),
+
+  /**
+   * A opening symbol e.g. '(' or '['
+   */
+  OPEN(null, Formatter::handleOpen),
+
+  /**
+   * A closing symbol e.g. ')' or ']'
+   */
+  CLOSE(null, Formatter::handleClose),
 
   /**
    * A operator e.g. +
    */
-  OPERATOR(false),
+  OPERATOR(null, Formatter::handleOperator),
 
   /**
    * Any other character which isn't captured by any of the other rules
    */
-  SYMBOL(false);
+  SYMBOL(null, Formatter::handleSymbol),
 
-  private final boolean isText;
+  /**
+   * Indicates the EndOfFile
+   * Returned if no more text is aviable for lexing
+   */
+  EOF(null, Formatter::handleDefault);
 
-  ETokenType(boolean pIsText)
+  public final Boolean isKeyword;
+  public final Consumer<Formatter> formattingHandler;
+
+  ETokenType(@Nullable Boolean pIsKeyword, @NotNull Consumer<Formatter> pFormattingHandler)
   {
-    isText = pIsText;
-  }
-
-  public boolean isText()
-  {
-    return isText;
+    isKeyword = pIsKeyword;
+    formattingHandler = pFormattingHandler;
   }
 }

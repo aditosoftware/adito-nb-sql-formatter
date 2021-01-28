@@ -66,17 +66,12 @@ public class Token implements IToken<ETokenType>
   @NotNull
   public String format(@NotNull Settings pSettings)
   {
-    switch (type)
-    {
-      case WORD:
-        return pSettings.getWordCaseMode().format(text);
-      case RESERVED:
-      case RESERVED_TOPLEVEL:
-      case RESERVED_WRAPPING:
-        return pSettings.getKeywordCaseMode().format(text);
-      default:
-        return text;
-    }
+    if(type.isKeyword == null)
+      return text;
+    if(type.isKeyword)
+      return pSettings.getKeywordCaseMode().format(text);
+    else
+      return pSettings.getWordCaseMode().format(text);
   }
 
   /**

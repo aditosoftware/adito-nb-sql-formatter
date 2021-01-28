@@ -41,7 +41,7 @@ public class Settings
    */
   public Settings()
   {
-    this(EIndentMode.SPACE_4, ELineEnding.CRLF, ELetterCaseMode.UPPERCASE, ELetterCaseMode.LOWERCASE);
+    this(EIndentMode.SPACE_2, ELineEnding.CRLF, ELetterCaseMode.UPPERCASE, ELetterCaseMode.LOWERCASE);
   }
 
   /**

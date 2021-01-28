@@ -2,7 +2,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl;
 
 import de.adito.aditoweb.nbm.sqlformatter.api.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
-import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.Tokenizer;
+import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.jetbrains.annotations.NotNull;
 
@@ -21,7 +21,7 @@ public class SQLUtils
   @NotNull
   public static String format(@NotNull String pTarget, @NotNull Settings pSettings)
   {
-    ITokenizer tokenizer = new Tokenizer(pTarget);
+    ITokenizer<Token> tokenizer = new Tokenizer(pTarget);
     IFormatter formatter = new Formatter(tokenizer, pSettings);
     return formatter.format();
   }

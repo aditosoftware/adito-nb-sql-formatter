@@ -26,7 +26,8 @@ public enum ELetterCaseMode
   @NotNull
   public String format(@NotNull String target)
   {
-    if (fmtFunc == null) return target;
+    if (fmtFunc == null)
+      return target;
     return fmtFunc.apply(target);
   }
 

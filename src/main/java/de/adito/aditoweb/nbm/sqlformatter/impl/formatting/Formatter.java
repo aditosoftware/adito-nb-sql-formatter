@@ -1,10 +1,8 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.formatting;
 
 import de.adito.aditoweb.nbm.sqlformatter.api.*;
+import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
-import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.Token;
-import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.ETokenType;
-import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.Tokenizer;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -35,13 +33,6 @@ public class Formatter implements IFormatter
   private Token curr = null;
 
   /**
-   * The last token
-   */
-  private Token last = null;
-
-  private boolean parenListStyle = true;
-
-  /**
    * Constructor of the Formatter
    *
    * @param pTokenizer The Tokenizer holding the input SQL
@@ -55,64 +46,11 @@ public class Formatter implements IFormatter
   }
 
   /**
-   * This function gets called after each token has been written to the output TextBuilder
-   * and is used for writing a proper spacing between each token
-   * <p>
-   * For example operator tokens need a space on both sides, but commas only need a space after the token
-   */
-  private void _writeSpacing()
-  {
-    if (!text.spacingAllowed())
-      return;
-
-    if (curr.check(ETokenType.SYMBOL, ";"))
-      return;
-    if (last.check(ETokenType.SYMBOL, ";"))
-    {
-      text.decIndent(Integer.MAX_VALUE);
-      text.singleNewline();
-      text.newline();
-      text.newline();
-      return;
-    }
-
-    if (curr.check(ETokenType.SYMBOL, ".") || last.check(ETokenType.SYMBOL, "."))
-      return;
-    if (curr.check(ETokenType.SYMBOL, ","))
-      return;
-
-    if (last.getType().isText() && curr.check(ETokenType.SYMBOL, "("))
-      return;
-    if(last.check(ETokenType.SYMBOL, "(")) {
-      if(parenListStyle) {
-        text.singleNewline();
-      }
-      return;
-    }
-    if (curr.check(ETokenType.SYMBOL, ")")) {
-      text.singleNewline();
-      text.decIndent(2);
-      if (!parenListStyle)
-        text.incIndent(0);
-      parenListStyle = false;
-      return;
-    }
-
-    if(curr.getType().isText() && last.check(ETokenType.SYMBOL, "`") ||
-        last.getType().isText() && curr.check(ETokenType.SYMBOL, "`"))
-      return;
-
-    if (last.check(ETokenType.SYMBOL, ","))
-      text.singleNewline();
-    else
-      text.write(" ");
-  }
-
-  /**
-   * Implementation of the core formatting algorithm
-   * <p>
-   * This function loops through all tokens and decides if and how many spaces/line breaks
-   * needs to be written before and after the token
+   * Entry point of the formatting algorithm
+   *
+   * This function loops through all tokens and sets 'curr'
+   * It also finishes if curr is an EOF Token
+   * It also calls '_handle' each cycle
    *
    * @return The formatted SQL
    */
@@ -122,76 +60,106 @@ public class Formatter implements IFormatter
     while (true)
     {
       curr = tokenizer.next();
-      if (curr == null)
+      if (curr.getType() == ETokenType.EOF)
         return text.finish();
-      _handle();
-
-      if (curr.check(ETokenType.SYMBOL, "("))
-      {
-        if (last.getType().isText()) parenListStyle = true;
-        else
-        {
-          text.decIndent(0);
-          parenListStyle = false;
-        }
-        text.incIndent(2);
-      }
-      last = curr;
+      curr.getType().formattingHandler.accept(this);
     }
   }
 
-  private void _handle()
+  public static void handleOpen(@NotNull Formatter pFmt)
   {
-    switch (curr.getType())
+    pFmt.text.write(pFmt.curr.getText());
+    pFmt.text.incIndent(EIndentLevel.BLOCK);
+    pFmt.text.singleNewline();
+  }
+
+  public static void handleClose(@NotNull Formatter pFmt)
+  {
+    pFmt.text.decIndent(EIndentLevel.BLOCK);
+    pFmt.text.singleNewline();
+    pFmt.text.write(pFmt.curr.getText());
+  }
+
+  public static void handleOperator(@NotNull Formatter pFmt)
+  {
+    pFmt.text.singleSpace();
+    pFmt.text.write(pFmt.curr.getText());
+  }
+
+  public static void handleSymbol(@NotNull Formatter pFmt)
+  {
+    switch (pFmt.curr.getText())
     {
-      case RESERVED:
-        _handleReserved();
+      case ".":
+        pFmt.text.write(pFmt.curr.getText());
+        pFmt.text.noSpace();
         break;
-      case RESERVED_TOPLEVEL:
-        _handleReservedTopLevel();
+      case ",":
+        pFmt.text.write(pFmt.curr.getText());
+        pFmt.text.singleNewline();
         break;
-      case RESERVED_WRAPPING:
-        _handleReservedWrapping();
+      case ";":
+        pFmt.text.write(pFmt.curr.getText());
+        pFmt.text.singleNewline();
+        pFmt. text.newline();
         break;
       default:
-        _writeSpacing();
-        text.write(curr.format(settings));
+        pFmt.text.write(pFmt.curr.getText());
         break;
     }
   }
 
-  private void _handleReserved()
+  public static void handleKeyword(@NotNull Formatter pFmt)
   {
-    _writeSpacing();
-    switch (curr.getText().toUpperCase()) {
+    switch (pFmt.curr.getText().toUpperCase())
+    {
       case "CASE":
-        text.write(curr.format(settings));
-        text.incIndent(2);
+        pFmt.text.write(pFmt.curr.format(pFmt.settings));
+        pFmt.text.incIndent(EIndentLevel.SWITCH);
         break;
       case "END":
-        text.decIndent(2);
-        text.singleNewline();
-        text.write(curr.format(settings));
+        pFmt.text.decIndent(EIndentLevel.SWITCH);
+        pFmt.text.write(pFmt.curr.format(pFmt.settings));
         break;
       default:
-        text.write(curr.format(settings));
+        handleDefault(pFmt);
         break;
     }
   }
 
-  private void _handleReservedTopLevel()
+  public static void handleKWTopLevel(@NotNull Formatter pFmt)
   {
-    text.decIndent(0);
-    if (last == null || !last.check(ETokenType.SYMBOL, "("))
-      text.singleNewline();
-    text.write(curr.format(settings));
-    text.incIndent(0);
-    text.singleNewline();
+    pFmt.text.singleNewline();
+    pFmt.text.decIndent(EIndentLevel.KEYWORD);
+    pFmt.text.write(pFmt.curr.format(pFmt.settings));
+    pFmt.text.singleNewline();
+    pFmt.text.incIndent(EIndentLevel.KEYWORD);
   }
 
-  private void _handleReservedWrapping()
+  public static void handleKWLazyTopLevel(@NotNull Formatter pFmt)
   {
-    text.singleNewline();
-    text.write(curr.format(settings));
+    pFmt.text.singleNewline();
+    pFmt.text.decIndent(EIndentLevel.KEYWORD);
+
+    pFmt.text.write(pFmt.curr.format(pFmt.settings));
+    pFmt.curr = pFmt.tokenizer.next();
+
+    pFmt.text.singleSpace();
+    pFmt.text.write(pFmt.curr.format(pFmt.settings));
+
+    pFmt.text.singleNewline();
+    pFmt.text.incIndent(EIndentLevel.KEYWORD);
+  }
+
+  public static void handleKWWrapping(@NotNull Formatter pFmt)
+  {
+    pFmt.text.singleNewline();
+    pFmt.text.write(pFmt.curr.format(pFmt.settings));
+  }
+
+  public static void handleDefault(@NotNull Formatter pFmt)
+  {
+    pFmt.text.singleSpace();
+    pFmt.text.write(pFmt.curr.format(pFmt.settings));
   }
 }

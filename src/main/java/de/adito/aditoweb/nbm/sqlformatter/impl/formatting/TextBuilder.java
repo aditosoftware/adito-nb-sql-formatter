@@ -1,6 +1,5 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.formatting;
 
-import de.adito.aditoweb.nbm.sqlformatter.api.ITextBuilder;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,16 +10,45 @@ import java.util.Stack;
  *
  * @author p.neub, 01.12.2020
  */
-public class TextBuilder implements ITextBuilder
+public class TextBuilder
 {
   private final Settings settings;
   private final StringBuilder builder = new StringBuilder();
+
+  private boolean spaceFlag = true;
   private boolean newlineFlag = true;
-  private final Stack<Integer> indents = new Stack<>();
+
+  private final Stack<EIndentLevel> indents = new Stack<>();
 
   public TextBuilder(@NotNull Settings pSettings)
   {
     settings = pSettings;
+  }
+
+  /**
+   * Writes a space
+   */
+  public void space()
+  {
+    spaceFlag = true;
+    builder.append(" ");
+  }
+
+  /**
+   * Writes a space but if the last char is already a space or a new line it does nothing
+   */
+  public void singleSpace()
+  {
+    if (!newlineFlag && !spaceFlag)
+      space();
+  }
+
+  /**
+   * Disables spacing until the next write
+   */
+  public void noSpace()
+  {
+    spaceFlag = true;
   }
 
   /**
@@ -42,12 +70,30 @@ public class TextBuilder implements ITextBuilder
   }
 
   /**
-   * Writes some text, this should not be used for writing new lines
+   * Disables new lines until the next write
+   */
+  public void noNewLine()
+  {
+    newlineFlag = true;
+  }
+
+  /**
+   * Disables all whitespace characters until the next write
+   */
+  public void noWhitespace()
+  {
+    noSpace();
+    noNewLine();
+  }
+
+  /**
+   * Writes some text, this should not be used for writing new lines or spaces
    *
    * @param pText the text which will be written to the StringBuilder
    */
   public void write(@NotNull String pText)
   {
+    spaceFlag = false;
     if (newlineFlag)
     {
       newlineFlag = false;
@@ -66,36 +112,26 @@ public class TextBuilder implements ITextBuilder
   @NotNull
   public String finish()
   {
-    return builder.toString();
-  }
-
-  /**
-   * Checks if spacing is allowed at the current state of the TextBuilder
-   * - Checks if the last char is a newline if so spacing is not allowed
-   *
-   * @return is spacing allowed
-   */
-  public boolean spacingAllowed()
-  {
-    return !newlineFlag;
+    return builder.toString().trim();
   }
 
   /**
    * Increases the indents
    *
-   * @param pLevel The level is used for decreasing indents. Higher level indents always decrease the lower level indents too.
+   * @param pLevel The level is used for increasing indents.
    */
-  public void incIndent(int pLevel)
+  public void incIndent(EIndentLevel pLevel)
   {
     indents.push(pLevel);
   }
 
   /**
    * Decreases the indents
+   * Higher level indents always decrease the lower level indents too.
    *
-   * @param pLevel Higher level indents always decrease the lower level indents too.
+   * @param pLevel The level is used for decreasing indents.
    */
-  public void decIndent(int pLevel)
+  public void decIndent(EIndentLevel pLevel)
   {
     while (!indents.isEmpty())
     {
@@ -104,7 +140,7 @@ public class TextBuilder implements ITextBuilder
         indents.pop();
         break;
       }
-      else if (indents.peek() < pLevel)
+      else if (indents.peek().ordinal() < pLevel.ordinal())
         indents.pop();
       else
         break;

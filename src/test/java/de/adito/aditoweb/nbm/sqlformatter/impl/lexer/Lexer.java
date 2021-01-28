@@ -1,6 +1,5 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.lexer;
 
-import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.junit.*;
 
 import java.nio.charset.StandardCharsets;
@@ -76,7 +75,7 @@ public class Lexer
     while (true)
     {
       Token token = tokenizer.next();
-      if (token == null)
+      if (token.getType() == ETokenType.EOF)
         break;
       Assert.assertTrue("Token amount doesn't match", tokenPos < pTokens.size());
       Token expectedToken = pTokens.get(tokenPos++);

@@ -12,14 +12,40 @@ import java.util.Stack;
  */
 public class TextBuilder
 {
+  /**
+   * The settings witch are needed to insert the correct indentation
+   * and line break characters
+   */
   private final Settings settings;
+
+  /**
+   * The formatting result will be written to this StringBuilder
+   */
   private final StringBuilder builder = new StringBuilder();
 
+  /**
+   * Indicates if the last character is a space
+   * Note: This can also be manually modified to prevent whitespacing
+   */
   private boolean spaceFlag = true;
+
+  /**
+   * Indicates if the last character is a new line
+   * Note: This can also be manually modified to prevent new lining
+   */
   private boolean newlineFlag = true;
 
+  /**
+   * The indentation stack
+   * the size of this stack is equal to the amount of indents
+   */
   private final Stack<EIndentLevel> indents = new Stack<>();
 
+  /**
+   * Creates a new TextBuilder instance
+   *
+   * @param pSettings Formatting Settings for the TextBuilder
+   */
   public TextBuilder(@NotNull Settings pSettings)
   {
     settings = pSettings;

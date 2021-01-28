@@ -2,9 +2,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl.tasks;
 
 import de.adito.aditoweb.nbm.sqlformatter.impl.SQLUtils;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
-import org.netbeans.modules.editor.indent.spi.Context;
-import org.netbeans.modules.editor.indent.spi.ExtraLock;
-import org.netbeans.modules.editor.indent.spi.ReformatTask;
+import org.netbeans.modules.editor.indent.spi.*;
 
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;

@@ -68,7 +68,7 @@ public enum ETokenType
   /**
    * A operator e.g. +
    */
-  OPERATOR(null, Formatter::handleOperator),
+  OPERATOR(null, Formatter::handleDefault),
 
   /**
    * Any other character which isn't captured by any of the other rules
@@ -81,9 +81,24 @@ public enum ETokenType
    */
   EOF(null, Formatter::handleDefault);
 
+  /**
+   * Null = No formatting is needed
+   * False = Should be formatted like a word
+   * True = Should be formatted like a keyword
+   */
   public final Boolean isKeyword;
+
+  /**
+   * Defines the formatting handler
+   */
   public final Consumer<Formatter> formattingHandler;
 
+  /**
+   * Constructs a new ETokenType
+   *
+   * @param pIsKeyword defines the way how this token should be formatted
+   * @param pFormattingHandler defines the entry point for formatting this token
+   */
   ETokenType(@Nullable Boolean pIsKeyword, @NotNull Consumer<Formatter> pFormattingHandler)
   {
     isKeyword = pIsKeyword;

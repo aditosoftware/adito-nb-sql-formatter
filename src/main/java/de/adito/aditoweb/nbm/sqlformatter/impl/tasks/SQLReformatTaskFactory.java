@@ -1,8 +1,7 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.tasks;
 
 import org.netbeans.api.editor.mimelookup.MimeRegistration;
-import org.netbeans.modules.editor.indent.spi.Context;
-import org.netbeans.modules.editor.indent.spi.ReformatTask;
+import org.netbeans.modules.editor.indent.spi.*;
 
 /**
  * Reformat task factory which adds the SQL formatting functionality into NetBeans

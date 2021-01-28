@@ -1,9 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.gui.actions;
 
-import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
-import org.openide.awt.ActionRegistration;
-import org.openide.awt.StatusDisplayer;
+import org.openide.awt.*;
 import org.openide.cookies.EditorCookie;
 import org.openide.util.NbBundle;
 

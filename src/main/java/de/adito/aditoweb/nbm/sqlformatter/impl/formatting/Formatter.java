@@ -59,13 +59,25 @@ public class Formatter implements IFormatter
   {
     while (true)
     {
+      // Advance the next Token
       curr = tokenizer.next();
+
+      // Exit if the curr token is 'EOF'
       if (curr.getType() == ETokenType.EOF)
         return text.finish();
+
+      // Call the formatting handler
       curr.getType().formattingHandler.accept(this);
     }
   }
 
+  /**
+   * Handles the Open Tocken
+   * Increases the indentation by a BLOCK level
+   * and inserts a new line
+   *
+   * @param pFmt the formatter
+   */
   public static void handleOpen(@NotNull Formatter pFmt)
   {
     pFmt.text.write(pFmt.curr.getText());
@@ -73,6 +85,13 @@ public class Formatter implements IFormatter
     pFmt.text.singleNewline();
   }
 
+  /**
+   * Handles the Close Tocken
+   * Decreases the indentation by a BLOCK level
+   * and inserts a new line
+   *
+   * @param pFmt the formatter
+   */
   public static void handleClose(@NotNull Formatter pFmt)
   {
     pFmt.text.decIndent(EIndentLevel.BLOCK);
@@ -80,12 +99,12 @@ public class Formatter implements IFormatter
     pFmt.text.write(pFmt.curr.getText());
   }
 
-  public static void handleOperator(@NotNull Formatter pFmt)
-  {
-    pFmt.text.singleSpace();
-    pFmt.text.write(pFmt.curr.getText());
-  }
-
+  /**
+   * Handles the Symbol Tocken
+   * Inserts whitespaces dependent on the type of Symbol
+   *
+   * @param pFmt the formatter
+   */
   public static void handleSymbol(@NotNull Formatter pFmt)
   {
     switch (pFmt.curr.getText())
@@ -100,6 +119,7 @@ public class Formatter implements IFormatter
         break;
       case ";":
         pFmt.text.write(pFmt.curr.getText());
+        pFmt.text.decIndent(EIndentLevel.ALL);
         pFmt.text.singleNewline();
         pFmt.text.newline();
         break;
@@ -109,6 +129,13 @@ public class Formatter implements IFormatter
     }
   }
 
+  /**
+   * Handles Keywordswitch need special formatting
+   * e.g. CASE and END
+   * It defaults to 'handleDefault'
+   *
+   * @param pFmt the formatter
+   */
   public static void handleKeyword(@NotNull Formatter pFmt)
   {
     switch (pFmt.curr.getText().toUpperCase())
@@ -128,6 +155,13 @@ public class Formatter implements IFormatter
     }
   }
 
+  /**
+   * Handles TopLevel Keywords like switch and from
+   * Increases the indentation by a KEYWORD level
+   * and inserts a new line
+   *
+   * @param pFmt the formatter
+   */
   public static void handleKWTopLevel(@NotNull Formatter pFmt)
   {
     pFmt.text.singleNewline();
@@ -137,6 +171,12 @@ public class Formatter implements IFormatter
     pFmt.text.incIndent(EIndentLevel.KEYWORD);
   }
 
+  /**
+   * Same as TopLevel but it skips
+   * one token befor inserting the new line
+   *
+   * @param pFmt the formatter
+   */
   public static void handleKWLazyTopLevel(@NotNull Formatter pFmt)
   {
     pFmt.text.singleNewline();
@@ -150,12 +190,26 @@ public class Formatter implements IFormatter
     pFmt.text.incIndent(EIndentLevel.KEYWORD);
   }
 
+  /**
+   * Handles wrapping keywords
+   * inserts a new line after the keyword
+   * without indenting anything
+   *
+   * @param pFmt the formatter
+   */
   public static void handleKWWrapping(@NotNull Formatter pFmt)
   {
     pFmt.text.singleNewline();
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
   }
 
+  /**
+   * Handles all other TokenTypes
+   * witch don't need a special formatting
+   * It just inserts a whitespace befor each Token
+   *
+   * @param pFmt the formatter
+   */
   public static void handleDefault(@NotNull Formatter pFmt)
   {
     pFmt.text.singleSpace();

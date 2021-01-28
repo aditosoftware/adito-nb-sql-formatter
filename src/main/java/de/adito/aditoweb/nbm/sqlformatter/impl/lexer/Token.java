@@ -74,18 +74,6 @@ public class Token implements IToken<ETokenType>
       return pSettings.getWordCaseMode().format(text);
   }
 
-  /**
-   * Checks two tokens for equality
-   *
-   * @param pType the type of the second token
-   * @param pText the text of the second token
-   * @return true if the tokens equals each other, otherwise false
-   */
-  public boolean check(@NotNull ETokenType pType, @NotNull String pText)
-  {
-    return type == pType && text.equals(pText);
-  }
-
   @Override
   public String toString()
   {

@@ -119,6 +119,7 @@ public class Formatter implements IFormatter
         break;
       case "END":
         pFmt.text.decIndent(EIndentLevel.SWITCH);
+        pFmt.text.singleNewline();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
         break;
       default:
@@ -140,12 +141,10 @@ public class Formatter implements IFormatter
   {
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
-
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
+
     pFmt.curr = pFmt.tokenizer.next();
-
-    pFmt.text.singleSpace();
-    pFmt.text.write(pFmt.curr.format(pFmt.settings));
+    pFmt.curr.getType().formattingHandler.accept(pFmt);
 
     pFmt.text.singleNewline();
     pFmt.text.incIndent(EIndentLevel.KEYWORD);

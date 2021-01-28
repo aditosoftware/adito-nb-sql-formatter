@@ -5,7 +5,7 @@ where
   ID in(
     select
       ID
-    from (
+    from(
       select
         *
       from CUSTOMERS

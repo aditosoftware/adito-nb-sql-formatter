@@ -116,6 +116,10 @@ public class Tokenizer implements ITokenizer<Token>
       String word = _readWhile(ch -> ch == '_' ||
           Character.isAlphabetic(ch) || Character.isDigit(ch), true);
 
+      // Check for ETokenType.FUNCTION_KEYWORD
+      if (ISQLConstants.FUNCTION_KEYWORDS.contains(word.toUpperCase()))
+        return new Token(ETokenType.FUNCTION_KEYWORD, word);
+
       // Check for ETokenType.KEYWORD
       if (ISQLConstants.KEYWORDS.contains(word.toUpperCase()))
         return new Token(ETokenType.KEYWORD, word);

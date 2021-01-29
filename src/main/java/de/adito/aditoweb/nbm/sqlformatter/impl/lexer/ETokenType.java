@@ -36,9 +36,14 @@ public enum ETokenType
   WORD(false, Formatter::handleDefault),
 
   /**
-   * A reserved word e.g. max
+   * A reserved word e.g. in
    */
   KEYWORD(true, Formatter::handleKeyword),
+
+  /**
+   * SQL-Function keyword e.g. count
+   */
+  FUNCTION_KEYWORD(true, Formatter::handleFunctionKeyword),
 
   /**
    * A reserved toplevel word e.g. select

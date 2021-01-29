@@ -2,15 +2,15 @@ select
   *
 from CUSTOMERS
 where
-  ID in(
+  ID in (
     select
       ID
-    from(
+    from (
       select
         *
       from CUSTOMERS
       where
-        ID in(
+        ID in (
           select
             ID
           from CUSTOMERS
@@ -26,7 +26,7 @@ select
   *
 from CUSTOMERS
 where
-  ID in(
+  ID in (
     select
       ID
     from CUSTOMERS

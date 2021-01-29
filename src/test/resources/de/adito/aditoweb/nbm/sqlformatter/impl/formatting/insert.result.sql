@@ -1,4 +1,4 @@
-insert into CUSTOMERS(
+insert into CUSTOMERS (
   CUSTOMERNAME,
   CONTACTNAME,
   ADDRESS,
@@ -6,7 +6,7 @@ insert into CUSTOMERS(
   POSTALCODE,
   COUNTRY
 )
-values(
+values (
   'Cardinal',
   'Tom B. Erichsen',
   'Skagen 21',

@@ -44,7 +44,7 @@ public class Lexer
         new Token(ETokenType.SYMBOL, "."),
         new Token(ETokenType.WORD, "ACTIVITYID"),
         new Token(ETokenType.OPERATOR, "+"),
-        new Token(ETokenType.KEYWORD, "max"),
+        new Token(ETokenType.FUNCTION_KEYWORD, "max"),
         new Token(ETokenType.OPEN, "("),
         new Token(ETokenType.NUMBER, "1"),
         new Token(ETokenType.SYMBOL, ","),

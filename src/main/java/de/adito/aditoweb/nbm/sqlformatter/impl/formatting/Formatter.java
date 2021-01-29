@@ -80,6 +80,7 @@ public class Formatter implements IFormatter
    */
   public static void handleOpen(@NotNull Formatter pFmt)
   {
+    pFmt.text.singleSpace();
     pFmt.text.write(pFmt.curr.getText());
     pFmt.text.incIndent(EIndentLevel.BLOCK);
     pFmt.text.singleNewline();
@@ -153,6 +154,18 @@ public class Formatter implements IFormatter
         handleDefault(pFmt);
         break;
     }
+  }
+
+  /**
+   * Handles SQL-Function keywords
+   * and stops inserting spaces after them
+   *
+   * @param pFmt the formatter
+   */
+  public static void handleFunctionKeyword(@NotNull Formatter pFmt)
+  {
+    handleDefault(pFmt);
+    pFmt.text.noSpace();
   }
 
   /**

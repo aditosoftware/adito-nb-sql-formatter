@@ -142,6 +142,7 @@ public class Formatter implements IFormatter
     switch (pFmt.curr.getText().toUpperCase())
     {
       case "CASE":
+        pFmt.text.singleSpace();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
         pFmt.text.incIndent(EIndentLevel.SWITCH);
         break;

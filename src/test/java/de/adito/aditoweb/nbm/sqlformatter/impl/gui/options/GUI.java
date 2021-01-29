@@ -8,8 +8,7 @@ import java.awt.*;
 
 public class GUI
 {
-  @Test
-  public void runOptionsPanel() throws InterruptedException
+  public static void main(String[] args)
   {
     SQLFormatterOptionsPanel optionsPanel = new SQLFormatterOptionsPanel();
     JPanel panel = new JPanel();
@@ -19,16 +18,10 @@ public class GUI
     JFrame frame = new JFrame("OptionsPanel");
     frame.setPreferredSize(new Dimension(700, 500));
     frame.setContentPane(panel);
-    frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.pack();
     frame.setVisible(true);
 
     optionsPanel.setSettings(new Settings());
-
-    /* HACK */
-    while (frame.isVisible())
-    {
-      Thread.sleep(1000);
-    }
   }
 }

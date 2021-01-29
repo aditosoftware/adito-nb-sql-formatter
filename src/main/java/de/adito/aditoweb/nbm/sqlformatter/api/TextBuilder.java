@@ -1,6 +1,5 @@
-package de.adito.aditoweb.nbm.sqlformatter.impl.formatting;
+package de.adito.aditoweb.nbm.sqlformatter.api;
 
-import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Stack;
@@ -8,20 +7,25 @@ import java.util.Stack;
 /**
  * Writes the formatted sql to an StringBuilder and handles the indentation
  *
+ * @param <T> IndentLevel enum
  * @author p.neub, 01.12.2020
  */
-public class TextBuilder
+public class TextBuilder<T extends Enum<?>>
 {
-  /**
-   * The settings witch are needed to insert the correct indentation
-   * and line break characters
-   */
-  private final Settings settings;
-
   /**
    * The formatting result will be written to this StringBuilder
    */
   private final StringBuilder builder = new StringBuilder();
+
+  /**
+   * String used for indentation
+   */
+  private final String indentStr;
+
+  /**
+   * String used for new lines
+   */
+  private final String newlineStr;
 
   /**
    * Indicates if the last character is a space
@@ -39,16 +43,18 @@ public class TextBuilder
    * The indentation stack
    * the size of this stack is equal to the amount of indents
    */
-  private final Stack<EIndentLevel> indents = new Stack<>();
+  private final Stack<T> indents = new Stack<>();
 
   /**
    * Creates a new TextBuilder instance
    *
-   * @param pSettings Formatting Settings for the TextBuilder
+   * @param pIndentStr String used for indentation
+   * @param pNewlineStr String used for new lines
    */
-  public TextBuilder(@NotNull Settings pSettings)
+  public TextBuilder(@NotNull String pIndentStr, @NotNull String pNewlineStr)
   {
-    settings = pSettings;
+    indentStr = pIndentStr;
+    newlineStr = pNewlineStr;
   }
 
   /**
@@ -83,7 +89,7 @@ public class TextBuilder
   public void newline()
   {
     newlineFlag = true;
-    builder.append(settings.getLineEnding().getLineEnding());
+    builder.append(newlineStr);
   }
 
   /**
@@ -123,9 +129,9 @@ public class TextBuilder
     if (newlineFlag)
     {
       newlineFlag = false;
-      String indentStr = new String(new char[indents.size()])
-          .replace("\0", settings.getIndentMode().getIndent());
-      builder.append(indentStr);
+      String indentText = new String(new char[indents.size()])
+          .replace("\0", indentStr);
+      builder.append(indentText);
     }
     builder.append(pText);
   }
@@ -146,7 +152,7 @@ public class TextBuilder
    *
    * @param pLevel The level is used for increasing indents.
    */
-  public void incIndent(EIndentLevel pLevel)
+  public void incIndent(T pLevel)
   {
     indents.push(pLevel);
   }
@@ -157,7 +163,7 @@ public class TextBuilder
    *
    * @param pLevel The level is used for decreasing indents.
    */
-  public void decIndent(EIndentLevel pLevel)
+  public void decIndent(T pLevel)
   {
     while (!indents.isEmpty())
     {

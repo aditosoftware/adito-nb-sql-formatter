@@ -25,7 +25,7 @@ public class Formatter implements IFormatter
   /**
    * The TextBuilder which is used to write the formatted SQL into a central object
    */
-  private final TextBuilder text;
+  private final TextBuilder<EIndentLevel> text;
 
   /**
    * The current Token
@@ -42,7 +42,7 @@ public class Formatter implements IFormatter
   {
     tokenizer = pTokenizer;
     settings = pSettings;
-    text = new TextBuilder(settings);
+    text = new TextBuilder<>(settings.getIndentMode().getIndent(), settings.getLineEnding().getLineEnding());
   }
 
   /**

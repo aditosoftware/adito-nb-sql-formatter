@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.gui.options;
 
-import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
+import de.adito.aditoweb.nbm.sqlformatter.impl.settings.*;
 import org.junit.Test;
 
 import javax.swing.*;

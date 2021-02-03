@@ -42,7 +42,7 @@ public class Formatter implements IFormatter
   {
     tokenizer = pTokenizer;
     settings = pSettings;
-    text = new TextBuilder<>(settings.getIndentMode().getIndent(), settings.getLineEnding().getLineEnding());
+    text = new TextBuilder<>(Settings.getIndentStr(), Settings.getNewlineStr());
   }
 
   /**
@@ -115,8 +115,17 @@ public class Formatter implements IFormatter
         pFmt.text.noSpace();
         break;
       case ",":
-        pFmt.text.write(pFmt.curr.getText());
-        pFmt.text.singleNewline();
+        if (pFmt.settings.newlineBeforeComma)
+        {
+          pFmt.text.singleNewline();
+          pFmt.text.write(pFmt.curr.getText());
+          pFmt.text.noSpace();
+        }
+        else
+        {
+          pFmt.text.write(pFmt.curr.getText());
+          pFmt.text.singleNewline();
+        }
         break;
       case ";":
         pFmt.text.write(pFmt.curr.getText());

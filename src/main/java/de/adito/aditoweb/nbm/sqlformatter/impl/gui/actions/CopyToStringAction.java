@@ -1,5 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.gui.actions;
 
+import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.openide.awt.*;
 import org.openide.cookies.EditorCookie;
 import org.openide.util.NbBundle;
@@ -47,23 +48,32 @@ public class CopyToStringAction implements ActionListener
   @Override
   public void actionPerformed(ActionEvent e)
   {
-    try
-    {
-      Document doc = context.getDocument();
-      String text = doc.getText(0, doc.getLength()).replaceAll("\"", "\\\\\"");
+    Settings settings = Settings.getSettings();
 
-      ArrayList<String> jsLines = new ArrayList<>();
-      for (String line : text.trim().split("\r\n|\n|\r"))
-        jsLines.add("\"" + line + "\"");
+    String text = context.getOpenedPanes()[0].getSelectedText();
+    if (text == null)
+      text = context.getOpenedPanes()[0].getText();
+    text = text.replaceAll("\"", "\\\\\"");
+    text = text.replaceAll("\t", "    ");
 
-      Toolkit.getDefaultToolkit().getSystemClipboard()
-          .setContents(new StringSelection(String.join(" +\r\n", jsLines)), null);
-      StatusDisplayer.getDefault()
-          .setStatusText(NbBundle.getMessage(CopyToStringAction.class, "LBL_CopyToString_MESSAGE"));
-    }
-    catch (Exception ignored)
+    ArrayList<String> jsLines = new ArrayList<>();
+    for (String line : text.trim().split("\r\n|\n|\r"))
     {
-      // Can't be reached because it checks the size using .getLenth().
+      if (settings.gapInsideQuotes)
+        line = '\"' + line;
+      else
+      {
+        int indetPos = line.replaceAll("[^ ]", "").length() - 1;
+        line = line.substring(0, indetPos) + '\"' + line.substring(indetPos);
+      }
+
+      String lineStr = settings.copyToStringPlusRight ? line + "\" + \"\\n\" +" : "+ " + line + "\" + \"\\n\"";
+      jsLines.add(lineStr);
     }
+
+    Toolkit.getDefaultToolkit().getSystemClipboard()
+        .setContents(new StringSelection(String.join("\r\n", jsLines)), null);
+    StatusDisplayer.getDefault()
+        .setStatusText(NbBundle.getMessage(CopyToStringAction.class, "LBL_CopyToString_MESSAGE"));
   }
 }

@@ -69,9 +69,9 @@ public class Token implements IToken<ETokenType>
     if (type.isKeyword == null)
       return text;
     if (type.isKeyword)
-      return pSettings.getKeywordCaseMode().format(text);
+      return pSettings.keywordCaseMode.format(text);
     else
-      return pSettings.getWordCaseMode().format(text);
+      return pSettings.wordCaseMode.format(text);
   }
 
   @Override

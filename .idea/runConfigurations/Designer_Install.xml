@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="DesignerInstall" type="ShConfigurationType">
+  <configuration default="false" name="Designer Install" type="ShConfigurationType">
     <option name="INDEPENDENT_SCRIPT_PATH" value="false" />
     <option name="SCRIPT_PATH" value="$PROJECT_DIR$/../../Windows/System32/cmd.exe" />
     <option name="SCRIPT_OPTIONS" value="/c copy target\sql-formatter-1.0.0.jar C:\entwicklungszweige\master\workingdir\nbp_userdir\modules\de-adito-aditoweb-nbm-sql-formatter.jar" />

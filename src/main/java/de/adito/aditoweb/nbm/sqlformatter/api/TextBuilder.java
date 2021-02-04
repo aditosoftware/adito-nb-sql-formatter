@@ -48,7 +48,7 @@ public class TextBuilder<T extends Enum<?>>
   /**
    * Creates a new TextBuilder instance
    *
-   * @param pIndentStr String used for indentation
+   * @param pIndentStr  String used for indentation
    * @param pNewlineStr String used for new lines
    */
   public TextBuilder(@NotNull String pIndentStr, @NotNull String pNewlineStr)

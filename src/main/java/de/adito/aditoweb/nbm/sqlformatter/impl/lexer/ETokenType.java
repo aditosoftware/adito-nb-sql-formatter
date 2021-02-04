@@ -101,7 +101,7 @@ public enum ETokenType
   /**
    * Constructs a new ETokenType
    *
-   * @param pIsKeyword defines the way how this token should be formatted
+   * @param pIsKeyword         defines the way how this token should be formatted
    * @param pFormattingHandler defines the entry point for formatting this token
    */
   ETokenType(@Nullable Boolean pIsKeyword, @NotNull Consumer<Formatter> pFormattingHandler)

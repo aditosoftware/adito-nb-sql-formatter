@@ -29,7 +29,7 @@ public enum ELetterCaseMode
    * Constructs a new ELetterCaseMode
    *
    * @param pDescription Description of the settings option
-   * @param pFmtFunc Function used to format tokens
+   * @param pFmtFunc     Function used to format tokens
    */
   ELetterCaseMode(@NotNull String pDescription, Function<String, String> pFmtFunc)
   {

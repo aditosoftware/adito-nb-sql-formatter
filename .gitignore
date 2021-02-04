@@ -1,0 +1,7 @@
+/.idea/*
+!/.idea/codeStyles
+!/.idea/inspectionProfiles
+!/.idea/runConfigurations
+!/.idea/vcs.xml
+/target
+*.iml

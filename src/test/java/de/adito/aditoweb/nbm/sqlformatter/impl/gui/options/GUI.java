@@ -6,6 +6,9 @@ import org.junit.Test;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author p.neub, 04.02.2021
+ */
 public class GUI
 {
   public static void main(String[] args)

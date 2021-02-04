@@ -5,12 +5,15 @@ import org.junit.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+/**
+ * @author p.neub, 04.02.2021
+ */
 public class Lexer
 {
   @Test
   public void symbols()
   {
-    testFile("symbols", Arrays.asList(
+    _testFile("symbols", Arrays.asList(
         new Token(ETokenType.OPERATOR, "**"),
         new Token(ETokenType.OPEN, "("),
         new Token(ETokenType.OPERATOR, "+"),
@@ -30,7 +33,7 @@ public class Lexer
   @Test
   public void complex()
   {
-    testFile("complex", Arrays.asList(
+    _testFile("complex", Arrays.asList(
         new Token(ETokenType.WORD, "contact"),
         new Token(ETokenType.SYMBOL, "`"),
         new Token(ETokenType.SYMBOL, "`"),
@@ -65,7 +68,7 @@ public class Lexer
    * @param pName   the name of the test sql file
    * @param pTokens the expected tokens
    */
-  private void testFile(String pName, List<Token> pTokens)
+  private void _testFile(String pName, List<Token> pTokens)
   {
     String sqlText = new Scanner(Lexer.class.getResourceAsStream(pName + ".sql"), StandardCharsets.UTF_8)
         .useDelimiter("\\A").next();

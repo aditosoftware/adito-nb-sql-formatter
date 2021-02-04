@@ -56,7 +56,7 @@ public class Settings
    *
    * @param pWordCaseMode          In witch 'letter case' should words be formatted
    * @param pKeywordCaseMode       In witch 'letter case' should words be formatted
-   * @param pNewlineBeforeComma    Idicates whether the comma should be places before or after a newline
+   * @param pNewlineBeforeComma    Indicates whether the comma should be places before or after a newline
    * @param pCopyToStringPlusRight Indicates whether the plus should be placed on the left/right of the line
    * @param pGapInsideQuotes       Indicates whether the whitespace gab should be places inside the quotes
    */

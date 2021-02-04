@@ -15,19 +15,19 @@ public class Formatting
   @Test
   public void simple()
   {
-    compareFiles("simple");
+    _compareFiles("simple");
   }
 
   @Test
   public void insert()
   {
-    compareFiles("insert");
+    _compareFiles("insert");
   }
 
   @Test
   public void subsql()
   {
-    compareFiles("subsql");
+    _compareFiles("subsql");
   }
 
   /**
@@ -37,7 +37,7 @@ public class Formatting
    *
    * @param pName the name of the test sql file
    */
-  private void compareFiles(String pName)
+  private void _compareFiles(String pName)
   {
     String provided = new Scanner(Formatting.class.getResourceAsStream(pName + ".sql"), StandardCharsets.UTF_8)
         .useDelimiter("\\A").next();

@@ -11,7 +11,7 @@
   </parent>
 
   <groupId>de.adito.aditoweb.nbm</groupId>
-  <artifactId>SqlFormatter</artifactId>
+  <artifactId>sql-formatter</artifactId>
   <version>1.0.0</version>
   <packaging>nbm</packaging>
   <name>SQL Formatter</name>

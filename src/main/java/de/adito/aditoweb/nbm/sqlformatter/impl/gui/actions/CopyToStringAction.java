@@ -5,7 +5,6 @@ import org.openide.awt.*;
 import org.openide.cookies.EditorCookie;
 import org.openide.util.NbBundle;
 
-import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;

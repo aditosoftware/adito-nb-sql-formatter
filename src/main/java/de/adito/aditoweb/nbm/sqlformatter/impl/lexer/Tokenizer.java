@@ -32,8 +32,8 @@ public class Tokenizer implements ITokenizer<Token>
    *
    * @return the next token
    */
-  @NotNull
   @Override
+  @NotNull
   public Token next()
   {
     // Checks weather the end of text is reached

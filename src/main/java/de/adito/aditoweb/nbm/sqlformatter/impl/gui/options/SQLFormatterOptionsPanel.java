@@ -3,6 +3,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl.gui.options;
 import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.*;
 import org.jetbrains.annotations.NotNull;
+import org.openide.text.CloneableEditorSupport;
 import org.openide.util.NbBundle;
 
 import javax.swing.*;
@@ -18,8 +19,8 @@ import java.util.Objects;
  */
 public class SQLFormatterOptionsPanel extends JPanel
 {
-  private final JTextArea inputSql = new JTextArea("select  case   when CONTACT.PERSON_ID is null then 1   else case    when trim (CONTACT.ORGANISATION_ID  ) = '0' then 2    else 3   end  end,     ADDRESS.ADDRESS,   ADDRESS.BUILDINGNO,  ADDRESS.ZIP, ADDRESS.CITY,     ADDRESS.COUNTRY,  ADDRESS.ADDRESSADDITION, ADDRESS.ADDRIDENTIFIER, ADDRESS.DISTRICT,  ADDRESS.REGION, ADDRESS.PROVINCE,     CONTACT.DEPARTMENT,     CONTACT.CONTACTROLE,     CONTACT.CONTACTPOSITION,     CONTACT.LETTERSALUTATION,     ORGANISATION.name,     PERSON.FIRSTNAME,     PERSON.MIDDLENAME,     PERSON.LASTNAME,     PERSON.SALUTATION,     PERSON.TITLE,     PERSON.TITLESUFFIX,  coalesce ( CONTACT.ISOLANGUAGE,  (  select   c.ISOLANGUAGE  from CONTACT  c   where  c.ORGANISATION_ID = CONTACT.ORGANISATION_ID                 and PERSON_ID is null         )     ),      'Max Musterman',     (   select ADDR_FORMAT from AB_COUNTRYINFO  where  ISO2 = ADDRESS.COUNTRY     ), ADDRESS.ADDR_TYPE from CONTACT join PERSON     on CONTACT.PERSON_ID = PERSON.PERSONID left join ORGANISATION     on CONTACT.ORGANISATION_ID = ORGANISATION.ORGANISATIONID left join ADDRESS     on CONTACT.ADDRESS_ID = ADDRESS.ADDRESSID where     CONTACT.CONTACTID in (  '0ae3a779-131c-440b-a653-569ac25ea699' )  and TEST = 123 and TEST = 123  or SDF = 45");
-  private final JTextArea outputSql = new JTextArea();
+  private final JEditorPane inputSql = new JEditorPane();
+  private final JEditorPane outputSql = new JEditorPane();
 
   private final JComboBox<ELetterCaseMode> wordCaseMode = new JComboBox<>(ELetterCaseMode.values());
   private final JComboBox<ELetterCaseMode> keywordCaseMode = new JComboBox<>(ELetterCaseMode.values());
@@ -66,7 +67,11 @@ public class SQLFormatterOptionsPanel extends JPanel
     JScrollPane inputScrollPane = new JScrollPane(inputSql);
     rightPanel.add(inputScrollPane);
 
+    inputSql.setEditorKit(CloneableEditorSupport.getEditorKit("text/x-sql"));
+    outputSql.setEditorKit(CloneableEditorSupport.getEditorKit("text/x-sql"));
+    inputSql.setText("select  case   when CONTACT.PERSON_ID is null then 1   else case    when trim (CONTACT.ORGANISATION_ID  ) = '0' then 2    else 3   end  end,     ADDRESS.ADDRESS,   ADDRESS.BUILDINGNO,  ADDRESS.ZIP, ADDRESS.CITY,     ADDRESS.COUNTRY,  ADDRESS.ADDRESSADDITION, ADDRESS.ADDRIDENTIFIER, ADDRESS.DISTRICT,  ADDRESS.REGION, ADDRESS.PROVINCE,     CONTACT.DEPARTMENT,     CONTACT.CONTACTROLE,     CONTACT.CONTACTPOSITION,     CONTACT.LETTERSALUTATION,     ORGANISATION.name,     PERSON.FIRSTNAME,     PERSON.MIDDLENAME,     PERSON.LASTNAME,     PERSON.SALUTATION,     PERSON.TITLE,     PERSON.TITLESUFFIX,  coalesce ( CONTACT.ISOLANGUAGE,  (  select   c.ISOLANGUAGE  from CONTACT  c   where  c.ORGANISATION_ID = CONTACT.ORGANISATION_ID                 and PERSON_ID is null         )     ),      'Max Musterman',     (   select ADDR_FORMAT from AB_COUNTRYINFO  where  ISO2 = ADDRESS.COUNTRY     ), ADDRESS.ADDR_TYPE from CONTACT join PERSON     on CONTACT.PERSON_ID = PERSON.PERSONID left join ORGANISATION     on CONTACT.ORGANISATION_ID = ORGANISATION.ORGANISATIONID left join ADDRESS     on CONTACT.ADDRESS_ID = ADDRESS.ADDRESSID where     CONTACT.CONTACTID in (  '0ae3a779-131c-440b-a653-569ac25ea699' )  and TEST = 123 and TEST = 123  or SDF = 45");
     outputSql.setEditable(false);
+
     JScrollPane outputScrollPane = new JScrollPane(outputSql);
     rightPanel.add(outputScrollPane);
     add(rightPanel);

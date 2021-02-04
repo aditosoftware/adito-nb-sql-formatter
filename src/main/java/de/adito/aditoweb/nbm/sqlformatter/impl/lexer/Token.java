@@ -40,6 +40,7 @@ public class Token implements IToken<ETokenType>
    *
    * @return the type of the token
    */
+  @Override
   @NotNull
   public ETokenType getType()
   {
@@ -51,6 +52,7 @@ public class Token implements IToken<ETokenType>
    *
    * @return the text of the token, usually the text representation of the token (not formatted)
    */
+  @Override
   @NotNull
   public String getText()
   {

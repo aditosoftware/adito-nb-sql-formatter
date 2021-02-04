@@ -66,6 +66,7 @@ public class Formatter implements IFormatter
    *
    * @return The formatted SQL
    */
+  @Override
   @NotNull
   public String format()
   {

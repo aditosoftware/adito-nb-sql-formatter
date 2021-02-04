@@ -23,7 +23,10 @@ public class SQLFormatterOptionsPanel extends JPanel
 
   private final JComboBox<ELetterCaseMode> wordCaseMode = new JComboBox<>(ELetterCaseMode.values());
   private final JComboBox<ELetterCaseMode> keywordCaseMode = new JComboBox<>(ELetterCaseMode.values());
+
+  private final JCheckBox caseWhenInSingleLine = new JCheckBox();
   private final JCheckBox newlineBeforeComma = new JCheckBox();
+
   private final JCheckBox copyToStringPlusRight = new JCheckBox();
   private final JCheckBox gapInsideQuotes = new JCheckBox();
 
@@ -42,6 +45,7 @@ public class SQLFormatterOptionsPanel extends JPanel
     _addGroupLabel(leftPanel, "Formatting");
     _addConfigComponent(leftPanel, NbBundle.getMessage(SQLFormatterOptionsPanel.class, "LBL_OptionsPanel_CONF_WORD_CASE"), wordCaseMode);
     _addConfigComponent(leftPanel, NbBundle.getMessage(SQLFormatterOptionsPanel.class, "LBL_OptionsPanel_CONF_KEYWORD_CASE"), keywordCaseMode);
+    _addConfigComponent(leftPanel, NbBundle.getMessage(SQLFormatterOptionsPanel.class, "LBL_OptionsPanel_CONF_CASE_SINGLE_LINE"), caseWhenInSingleLine);
     _addConfigComponent(leftPanel, NbBundle.getMessage(SQLFormatterOptionsPanel.class, "LBL_OptionsPanel_CONF_NEWLINE_COMMA"), newlineBeforeComma);
 
     _addGroupLabel(leftPanel, "CopyToString");
@@ -50,7 +54,10 @@ public class SQLFormatterOptionsPanel extends JPanel
 
     wordCaseMode.addActionListener(e -> _update());
     keywordCaseMode.addActionListener(e -> _update());
+
+    caseWhenInSingleLine.addActionListener(e -> _update());
     newlineBeforeComma.addActionListener(e -> _update());
+
     copyToStringPlusRight.addActionListener(e -> _update());
     gapInsideQuotes.addActionListener(e -> _update());
 
@@ -136,7 +143,10 @@ public class SQLFormatterOptionsPanel extends JPanel
     return new Settings(
         (ELetterCaseMode) Objects.requireNonNull(wordCaseMode.getSelectedItem()),
         (ELetterCaseMode) Objects.requireNonNull(keywordCaseMode.getSelectedItem()),
+
+        caseWhenInSingleLine.isSelected(),
         newlineBeforeComma.isSelected(),
+
         copyToStringPlusRight.isSelected(),
         gapInsideQuotes.isSelected()
     );
@@ -151,9 +161,13 @@ public class SQLFormatterOptionsPanel extends JPanel
   {
     wordCaseMode.setSelectedItem(pSettings.wordCaseMode);
     keywordCaseMode.setSelectedItem(pSettings.keywordCaseMode);
+
+    caseWhenInSingleLine.setSelected(pSettings.caseWhenInSingleLine);
     newlineBeforeComma.setSelected(pSettings.newlineBeforeComma);
+
     newlineBeforeComma.setSelected(pSettings.copyToStringPlusRight);
     gapInsideQuotes.setSelected(pSettings.gapInsideQuotes);
+
     _update();
   }
 

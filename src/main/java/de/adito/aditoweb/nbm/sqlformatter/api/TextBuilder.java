@@ -40,6 +40,11 @@ public class TextBuilder<T extends Enum<?>>
   private boolean newlineFlag = true;
 
   /**
+   * Writes everything into a single line
+   */
+  public boolean doFmt = true;
+
+  /**
    * The indentation stack
    * the size of this stack is equal to the amount of indents
    */
@@ -88,6 +93,10 @@ public class TextBuilder<T extends Enum<?>>
    */
   public void newline()
   {
+    if(!doFmt) {
+      singleSpace();
+      return;
+    }
     newlineFlag = true;
     builder.append(newlineStr);
   }

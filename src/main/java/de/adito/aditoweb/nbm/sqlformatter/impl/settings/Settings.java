@@ -28,6 +28,11 @@ public class Settings
   public final ELetterCaseMode keywordCaseMode;
 
   /**
+   * If true the whole case block will be written into a single line
+   */
+  public final boolean caseWhenInSingleLine;
+
+  /**
    * Idicates whether the comma should be places before or after a newline
    */
   public final boolean newlineBeforeComma;
@@ -48,7 +53,9 @@ public class Settings
    */
   public Settings()
   {
-    this(ELetterCaseMode.UPPERCASE, ELetterCaseMode.LOWERCASE, false, true, true);
+    this(ELetterCaseMode.UPPERCASE, ELetterCaseMode.LOWERCASE,
+         false, false,
+         true, true);
   }
 
   /**
@@ -56,15 +63,21 @@ public class Settings
    *
    * @param pWordCaseMode          In witch 'letter case' should words be formatted
    * @param pKeywordCaseMode       In witch 'letter case' should words be formatted
+   * @param pCaseWhenInSingleLine  If true the whole case block will be written into a single line
    * @param pNewlineBeforeComma    Indicates whether the comma should be places before or after a newline
    * @param pCopyToStringPlusRight Indicates whether the plus should be placed on the left/right of the line
    * @param pGapInsideQuotes       Indicates whether the whitespace gab should be places inside the quotes
    */
-  public Settings(@NotNull ELetterCaseMode pWordCaseMode, @NotNull ELetterCaseMode pKeywordCaseMode, boolean pNewlineBeforeComma, boolean pCopyToStringPlusRight, boolean pGapInsideQuotes)
+  public Settings(@NotNull ELetterCaseMode pWordCaseMode, @NotNull ELetterCaseMode pKeywordCaseMode,
+                  boolean pCaseWhenInSingleLine, boolean pNewlineBeforeComma,
+                  boolean pCopyToStringPlusRight, boolean pGapInsideQuotes)
   {
     wordCaseMode = pWordCaseMode;
     keywordCaseMode = pKeywordCaseMode;
+
+    caseWhenInSingleLine = pCaseWhenInSingleLine;
     newlineBeforeComma = pNewlineBeforeComma;
+
     copyToStringPlusRight = pCopyToStringPlusRight;
     gapInsideQuotes = pGapInsideQuotes;
   }
@@ -81,7 +94,10 @@ public class Settings
     return new Settings(
         ELetterCaseMode.valueOf(_PREFERENCES.get("wordCaseMode", defaultSetting.wordCaseMode.name())),
         ELetterCaseMode.valueOf(_PREFERENCES.get("keywordCaseMode", defaultSetting.keywordCaseMode.name())),
+
+        _PREFERENCES.getBoolean("caseWhenInSingleLine", defaultSetting.caseWhenInSingleLine),
         _PREFERENCES.getBoolean("newlineBeforeComma", defaultSetting.newlineBeforeComma),
+
         _PREFERENCES.getBoolean("copyToStringPlusRight", defaultSetting.copyToStringPlusRight),
         _PREFERENCES.getBoolean("gapInsideQuotes", defaultSetting.gapInsideQuotes)
     );
@@ -96,7 +112,10 @@ public class Settings
   {
     _PREFERENCES.put("wordCaseMode", settings.wordCaseMode.name());
     _PREFERENCES.put("keywordCaseMode", settings.keywordCaseMode.name());
+
+    _PREFERENCES.putBoolean("caseWhenInSingleLine", settings.caseWhenInSingleLine);
     _PREFERENCES.putBoolean("newlineBeforeComma", settings.newlineBeforeComma);
+
     _PREFERENCES.putBoolean("copyToStringPlusRight", settings.copyToStringPlusRight);
     _PREFERENCES.putBoolean("gapInsideQuotes", settings.gapInsideQuotes);
   }
@@ -136,12 +155,12 @@ public class Settings
     if (this == pO) return true;
     if (pO == null || getClass() != pO.getClass()) return false;
     Settings settings = (Settings) pO;
-    return newlineBeforeComma == settings.newlineBeforeComma && copyToStringPlusRight == settings.copyToStringPlusRight && gapInsideQuotes == settings.gapInsideQuotes && wordCaseMode == settings.wordCaseMode && keywordCaseMode == settings.keywordCaseMode;
+    return caseWhenInSingleLine == settings.caseWhenInSingleLine && newlineBeforeComma == settings.newlineBeforeComma && copyToStringPlusRight == settings.copyToStringPlusRight && gapInsideQuotes == settings.gapInsideQuotes && wordCaseMode == settings.wordCaseMode && keywordCaseMode == settings.keywordCaseMode;
   }
 
   @Override
   public int hashCode()
   {
-    return Objects.hash(wordCaseMode, keywordCaseMode, newlineBeforeComma, copyToStringPlusRight, gapInsideQuotes);
+    return Objects.hash(wordCaseMode, keywordCaseMode, caseWhenInSingleLine, newlineBeforeComma, copyToStringPlusRight, gapInsideQuotes);
   }
 }

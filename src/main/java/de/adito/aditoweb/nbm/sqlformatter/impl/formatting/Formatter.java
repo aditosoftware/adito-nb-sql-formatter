@@ -163,6 +163,8 @@ public class Formatter implements IFormatter
     switch (pFmt.curr.getText().toUpperCase())
     {
       case "CASE":
+        if(pFmt.settings.caseWhenInSingleLine)
+          pFmt.text.doFmt = false;
         pFmt.text.singleSpace();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
         pFmt.text.incIndent(EIndentLevel.SWITCH);
@@ -171,6 +173,8 @@ public class Formatter implements IFormatter
         pFmt.text.decIndent(EIndentLevel.SWITCH);
         pFmt.text.singleNewline();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
+        if(pFmt.settings.caseWhenInSingleLine)
+          pFmt.text.doFmt = true;
         break;
       default:
         handleDefault(pFmt);

@@ -128,8 +128,8 @@ public class Formatter implements IFormatter
         }
         break;
       case ";":
-        pFmt.text.write(pFmt.curr.getText());
         pFmt.text.decIndent(EIndentLevel.ALL);
+        pFmt.text.write(pFmt.curr.getText());
         pFmt.text.singleNewline();
         pFmt.text.newline();
         break;

@@ -170,7 +170,7 @@ public class SQLFormatterOptionsPanel extends JPanel
     caseWhenInSingleLine.setSelected(pSettings.caseWhenInSingleLine);
     newlineBeforeComma.setSelected(pSettings.newlineBeforeComma);
 
-    newlineBeforeComma.setSelected(pSettings.copyToStringPlusRight);
+    copyToStringPlusRight.setSelected(pSettings.copyToStringPlusRight);
     gapInsideQuotes.setSelected(pSettings.gapInsideQuotes);
 
     _update();

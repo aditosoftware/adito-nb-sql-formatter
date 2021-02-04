@@ -70,8 +70,17 @@ public class CopyToStringAction implements ActionListener
       jsLines.add(lineStr);
     }
 
+    String resultStr = String.join("\r\n", jsLines);
+    if(!jsLines.isEmpty())
+    {
+      if(settings.copyToStringPlusRight)
+        resultStr = resultStr.substring(0, resultStr.length() - 2);
+      else
+        resultStr = resultStr.substring(2);
+    }
+
     Toolkit.getDefaultToolkit().getSystemClipboard()
-        .setContents(new StringSelection(String.join("\r\n", jsLines)), null);
+        .setContents(new StringSelection(resultStr), null);
     StatusDisplayer.getDefault()
         .setStatusText(NbBundle.getMessage(CopyToStringAction.class, "LBL_CopyToString_MESSAGE"));
   }

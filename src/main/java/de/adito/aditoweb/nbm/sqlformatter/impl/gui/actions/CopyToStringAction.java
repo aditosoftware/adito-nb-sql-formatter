@@ -63,7 +63,7 @@ public class CopyToStringAction implements ActionListener
         line = '\"' + line;
       else
       {
-        int indetPos = line.replaceAll("[^ ]", "").length() - 1;
+        int indetPos = line.length() - line.replaceAll("^[ ]*", "").length();
         line = line.substring(0, indetPos) + '\"' + line.substring(indetPos);
       }
 

@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.tasks;
 
-import de.adito.aditoweb.nbm.sqlformatter.impl.SQLUtils;
+import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.netbeans.modules.editor.indent.spi.*;
 
@@ -40,7 +40,7 @@ public class SQLReformatTask implements ReformatTask
     Document doc = context.document();
     String docText = doc.getText(context.startOffset(),
                                  context.endOffset() - context.startOffset());
-    String formatted = SQLUtils.format(docText, Settings.getSettings());
+    String formatted = new Formatter(docText, Settings.getSettings()).format();
     doc.remove(context.startOffset(), context.endOffset() - context.startOffset());
     doc.insertString(context.startOffset(), formatted, null);
   }

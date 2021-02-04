@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.formatting;
 
-import de.adito.aditoweb.nbm.sqlformatter.impl.SQLUtils;
+import de.adito.aditoweb.nbm.sqlformatter.api.TextBuilder;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.junit.*;
 
@@ -44,7 +44,7 @@ public class Formatting
     String expected = new Scanner(Formatting.class.getResourceAsStream(pName + ".result.sql"), StandardCharsets.UTF_8)
         .useDelimiter("\\A").next();
 
-    String formatted = SQLUtils.format(provided, new Settings());
+    String formatted = new Formatter(provided, new Settings(), new TextBuilder<>("  ", "\r\n")).format();
     Assert.assertEquals("The sql doesn't match", expected, formatted);
   }
 }

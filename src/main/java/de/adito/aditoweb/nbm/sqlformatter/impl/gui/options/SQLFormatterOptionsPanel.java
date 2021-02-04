@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.gui.options;
 
-import de.adito.aditoweb.nbm.sqlformatter.impl.SQLUtils;
+import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.*;
 import org.jetbrains.annotations.NotNull;
 import org.openide.util.NbBundle;
@@ -131,6 +131,6 @@ public class SQLFormatterOptionsPanel extends JPanel
    */
   private void _update()
   {
-    outputSql.setText(SQLUtils.format(inputSql.getText(), getSettings()));
+    outputSql.setText(new Formatter(inputSql.getText(), getSettings()).format());
   }
 }

@@ -35,14 +35,26 @@ public class Formatter implements IFormatter
   /**
    * Constructor of the Formatter
    *
-   * @param pTokenizer The Tokenizer holding the input SQL
-   * @param pSettings  The settings which are needed for formatting the SQL
+   * @param pInputSQL The input SQL
+   * @param pSettings The settings which are needed for formatting the SQL
    */
-  public Formatter(@NotNull ITokenizer<Token> pTokenizer, @NotNull Settings pSettings)
+  public Formatter(@NotNull String pInputSQL, @NotNull Settings pSettings)
   {
-    tokenizer = pTokenizer;
+    this(pInputSQL, pSettings, new TextBuilder<>(Settings.getIndentStr(), Settings.getNewlineStr()));
+  }
+
+  /**
+   * Constructor of the Formatter with custom TextBuilder
+   *
+   * @param pInputSQL The input SQL
+   * @param pSettings The settings which are needed for formatting the SQL
+   * @param pText     Overwrites the default TextBuilder
+   */
+  public Formatter(@NotNull String pInputSQL, @NotNull Settings pSettings, @NotNull TextBuilder<EIndentLevel> pText)
+  {
+    tokenizer = new Tokenizer(pInputSQL);
     settings = pSettings;
-    text = new TextBuilder<>(Settings.getIndentStr(), Settings.getNewlineStr());
+    text = pText;
   }
 
   /**

@@ -40,9 +40,9 @@ public class TextBuilder<T extends Enum<?>>
   private boolean newlineFlag = true;
 
   /**
-   * Writes everything into a single line
+   * No new lines will be inserted if this is greater than zero
    */
-  public boolean doFmt = true;
+  private int singleLineMode = 0;
 
   /**
    * The indentation stack
@@ -60,6 +60,32 @@ public class TextBuilder<T extends Enum<?>>
   {
     indentStr = pIndentStr;
     newlineStr = pNewlineStr;
+  }
+
+  /**
+   * Decreases the singleLineMode by one
+   */
+  public void decreaseSingleLineMode()
+  {
+    if(singleLineMode == 0)
+      return;
+    singleLineMode--;
+  }
+
+  /**
+   * Increases the singleLineMode by one
+   */
+  public void increaseSingleLineMode()
+  {
+    singleLineMode++;
+  }
+
+  /**
+   * Resets the singleLineMode to zero
+   */
+  public void resetSingleLineMode()
+  {
+    singleLineMode = 0;
   }
 
   /**
@@ -93,7 +119,7 @@ public class TextBuilder<T extends Enum<?>>
    */
   public void newline()
   {
-    if(!doFmt) {
+    if(singleLineMode > 0) {
       singleSpace();
       return;
     }

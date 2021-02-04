@@ -140,6 +140,7 @@ public class Formatter implements IFormatter
         }
         break;
       case ";":
+        pFmt.text.resetSingleLineMode();
         pFmt.text.decIndent(EIndentLevel.ALL);
         pFmt.text.write(pFmt.curr.getText());
         pFmt.text.singleNewline();
@@ -164,7 +165,7 @@ public class Formatter implements IFormatter
     {
       case "CASE":
         if(pFmt.settings.caseWhenInSingleLine)
-          pFmt.text.doFmt = false;
+          pFmt.text.increaseSingleLineMode();
         pFmt.text.singleSpace();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
         pFmt.text.incIndent(EIndentLevel.SWITCH);
@@ -174,7 +175,7 @@ public class Formatter implements IFormatter
         pFmt.text.singleNewline();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
         if(pFmt.settings.caseWhenInSingleLine)
-          pFmt.text.doFmt = true;
+          pFmt.text.decreaseSingleLineMode();
         break;
       default:
         handleDefault(pFmt);

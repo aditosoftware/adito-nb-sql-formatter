@@ -61,16 +61,6 @@ public enum ETokenType
   KW_WRAPPING(true, Formatter::handleKWWrapping),
 
   /**
-   * A opening symbol e.g. '(' or '['
-   */
-  OPEN(null, Formatter::handleOpen),
-
-  /**
-   * A closing symbol e.g. ')' or ']'
-   */
-  CLOSE(null, Formatter::handleClose),
-
-  /**
    * A operator e.g. +
    */
   OPERATOR(null, Formatter::handleDefault),

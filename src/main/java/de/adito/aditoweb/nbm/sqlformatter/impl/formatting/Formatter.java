@@ -85,35 +85,6 @@ public class Formatter implements IFormatter
   }
 
   /**
-   * Handles the Open Tocken
-   * Increases the indentation by a BLOCK level
-   * and inserts a new line
-   *
-   * @param pFmt the formatter
-   */
-  public static void handleOpen(@NotNull Formatter pFmt)
-  {
-    pFmt.text.singleSpace();
-    pFmt.text.write(pFmt.curr.getText());
-    pFmt.text.incIndent(EIndentLevel.BLOCK);
-    pFmt.text.singleNewline();
-  }
-
-  /**
-   * Handles the Close Tocken
-   * Decreases the indentation by a BLOCK level
-   * and inserts a new line
-   *
-   * @param pFmt the formatter
-   */
-  public static void handleClose(@NotNull Formatter pFmt)
-  {
-    pFmt.text.decIndent(EIndentLevel.BLOCK);
-    pFmt.text.singleNewline();
-    pFmt.text.write(pFmt.curr.getText());
-  }
-
-  /**
    * Handles the Symbol Tocken
    * Inserts whitespaces dependent on the type of Symbol
    *
@@ -123,6 +94,18 @@ public class Formatter implements IFormatter
   {
     switch (pFmt.curr.getText())
     {
+      case "(":
+        pFmt.text.singleSpace();
+        pFmt.text.write(pFmt.curr.getText());
+        pFmt.text.incIndent(EIndentLevel.BLOCK);
+        pFmt.text.singleNewline();
+        break;
+      case ")":
+        pFmt.text.decIndent(EIndentLevel.BLOCK);
+        pFmt.text.singleNewline();
+        pFmt.text.write(pFmt.curr.getText());
+        break;
+
       case ".":
         pFmt.text.write(pFmt.curr.getText());
         pFmt.text.noSpace();

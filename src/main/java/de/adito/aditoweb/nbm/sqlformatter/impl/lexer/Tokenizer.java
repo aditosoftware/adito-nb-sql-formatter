@@ -43,21 +43,6 @@ public class Tokenizer implements ITokenizer<Token>
     // Read current char
     char currChar = text.charAt(pos);
 
-    // Handle OPEN and CLOSE Tokens
-    switch (currChar)
-    {
-      case '(':
-      case '[':
-      case '{':
-        pos++;
-        return new Token(ETokenType.OPEN, Character.toString(currChar));
-      case ')':
-      case ']':
-      case '}':
-        pos++;
-        return new Token(ETokenType.CLOSE, Character.toString(currChar));
-    }
-
     // Skip whitespaces
     if (Character.isWhitespace(currChar))
     {

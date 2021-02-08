@@ -35,8 +35,7 @@ public class Lexer
   {
     _testFile("complex", Arrays.asList(
         new Token(ETokenType.WORD, "contact"),
-        new Token(ETokenType.SYMBOL, "`"),
-        new Token(ETokenType.SYMBOL, "`"),
+        new Token(ETokenType.WORD, "``"),
         new Token(ETokenType.WORD, "OrganiSATION"),
         new Token(ETokenType.STRING, "\"Hubert Maier\""),
         new Token(ETokenType.STRING, "'Franz'"),

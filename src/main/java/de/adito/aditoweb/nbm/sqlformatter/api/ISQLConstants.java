@@ -16,6 +16,15 @@ public interface ISQLConstants
   List<Character> STRING_CHARS = Arrays.asList('\'', '"');
 
   /**
+   * Start characters for fields e.g. `FIELD_NAME` or [FIELD_NAME]
+   */
+  List<Character> FIELD_CHARS_START = Arrays.asList('`', '[');
+  /**
+   * End characters for fields e.g. `FIELD_NAME` or [FIELD_NAME]
+   */
+  List<Character> FIELD_CHARS_END = Arrays.asList('`', ']');
+
+  /**
    * List of operators
    */
   List<Character> OPERATORS = Arrays.asList('+', '-', '*', '/', '=', '<', '>', '!', '|', ':', '~');

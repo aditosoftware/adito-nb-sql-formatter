@@ -206,10 +206,7 @@ public class Formatter implements IFormatter
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
-
-    pFmt.curr = pFmt.tokenizer.next();
-    pFmt.curr.getType().formattingHandler.accept(pFmt);
-
+    pFmt.fmtBlock();
     pFmt.text.singleNewline();
     pFmt.text.incIndent(EIndentLevel.KEYWORD);
   }
@@ -238,5 +235,13 @@ public class Formatter implements IFormatter
   {
     pFmt.text.singleSpace();
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
+  }
+
+  private void fmtBlock()
+  {
+    do {
+      curr = tokenizer.next();
+      curr.getType().formattingHandler.accept(this);
+    } while(curr.getType() == ETokenType.WORD || (curr.getType() == ETokenType.SYMBOL && curr.getText().equals(".")));
   }
 }

@@ -5,8 +5,6 @@ import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.Consumer;
-
 /**
  * Implements SQL-Formatting functionality
  *
@@ -208,7 +206,7 @@ public class Formatter implements IFormatter
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
-    pFmt.fmtBlock(() -> {
+    pFmt._fmtBlock(() -> {
       pFmt.text.singleNewline();
       pFmt.text.incIndent(EIndentLevel.KEYWORD);
     });
@@ -240,7 +238,7 @@ public class Formatter implements IFormatter
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
   }
 
-  private void fmtBlock(Runnable pPostAction)
+  private void _fmtBlock(@NotNull Runnable pPostAction)
   {
     while (true)
     {

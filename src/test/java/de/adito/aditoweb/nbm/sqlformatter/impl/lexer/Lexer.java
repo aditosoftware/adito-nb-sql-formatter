@@ -56,6 +56,7 @@ public class Lexer
         new Token(ETokenType.SYMBOL, ")"),
         new Token(ETokenType.SYMBOL, ","),
         new Token(ETokenType.SYMBOL, ","),
+        new Token(ETokenType.WORD, "[ACTIVITYID]"),
         new Token(ETokenType.LINE_COMMENT, "-- This is a comment as well")
     ));
   }

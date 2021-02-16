@@ -5,6 +5,8 @@ import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.function.Consumer;
+
 /**
  * Implements SQL-Formatting functionality
  *
@@ -148,7 +150,7 @@ public class Formatter implements IFormatter
     switch (pFmt.curr.getText().toUpperCase())
     {
       case "CASE":
-        if(pFmt.settings.caseWhenInSingleLine)
+        if (pFmt.settings.caseWhenInSingleLine)
           pFmt.text.increaseSingleLineMode();
         pFmt.text.singleSpace();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
@@ -158,7 +160,7 @@ public class Formatter implements IFormatter
         pFmt.text.decIndent(EIndentLevel.SWITCH);
         pFmt.text.singleNewline();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
-        if(pFmt.settings.caseWhenInSingleLine)
+        if (pFmt.settings.caseWhenInSingleLine)
           pFmt.text.decreaseSingleLineMode();
         break;
       default:
@@ -206,9 +208,10 @@ public class Formatter implements IFormatter
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
-    pFmt.fmtBlock();
-    pFmt.text.singleNewline();
-    pFmt.text.incIndent(EIndentLevel.KEYWORD);
+    pFmt.fmtBlock(() -> {
+      pFmt.text.singleNewline();
+      pFmt.text.incIndent(EIndentLevel.KEYWORD);
+    });
   }
 
   /**
@@ -237,11 +240,20 @@ public class Formatter implements IFormatter
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
   }
 
-  private void fmtBlock()
+  private void fmtBlock(Runnable pPostAction)
   {
-    do {
+    while (true)
+    {
       curr = tokenizer.next();
-      curr.getType().formattingHandler.accept(this);
-    } while(curr.getType() == ETokenType.WORD || (curr.getType() == ETokenType.SYMBOL && curr.getText().equals(".")));
+      if (curr.getType() == ETokenType.WORD || (curr.getType() == ETokenType.SYMBOL && curr.getText().equals(".")))
+        curr.getType().formattingHandler.accept(this);
+      else
+      {
+        if (curr.getType().isKeyword == Boolean.TRUE)
+          pPostAction.run();
+        curr.getType().formattingHandler.accept(this);
+        return;
+      }
+    }
   }
 }

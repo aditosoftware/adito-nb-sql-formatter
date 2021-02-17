@@ -30,6 +30,12 @@ public class Formatting
     _compareFiles("subsql");
   }
 
+  @Test
+  public void encapsulatedWord()
+  {
+    _compareFiles("encapsulatedWord");
+  }
+
   /**
    * Compares two sql files (x.sql and x.result.sql)
    * If the formatted x.sql doesn't match with x.result.sql

@@ -15,12 +15,12 @@ public class Lexer
   {
     _testFile("symbols", Arrays.asList(
         new Token(ETokenType.OPERATOR, "**"),
-        new Token(ETokenType.OPEN, "("),
+        new Token(ETokenType.SYMBOL, "("),
         new Token(ETokenType.OPERATOR, "+"),
-        new Token(ETokenType.CLOSE, ")"),
-        new Token(ETokenType.CLOSE, ")"),
-        new Token(ETokenType.CLOSE, ")"),
-        new Token(ETokenType.CLOSE, ")"),
+        new Token(ETokenType.SYMBOL, ")"),
+        new Token(ETokenType.SYMBOL, ")"),
+        new Token(ETokenType.SYMBOL, ")"),
+        new Token(ETokenType.SYMBOL, ")"),
         new Token(ETokenType.OPERATOR, "+*"),
         new Token(ETokenType.SYMBOL, "."),
         new Token(ETokenType.SYMBOL, "."),
@@ -35,8 +35,7 @@ public class Lexer
   {
     _testFile("complex", Arrays.asList(
         new Token(ETokenType.WORD, "contact"),
-        new Token(ETokenType.SYMBOL, "`"),
-        new Token(ETokenType.SYMBOL, "`"),
+        new Token(ETokenType.WORD, "``"),
         new Token(ETokenType.WORD, "OrganiSATION"),
         new Token(ETokenType.STRING, "\"Hubert Maier\""),
         new Token(ETokenType.STRING, "'Franz'"),
@@ -48,15 +47,16 @@ public class Lexer
         new Token(ETokenType.WORD, "ACTIVITYID"),
         new Token(ETokenType.OPERATOR, "+"),
         new Token(ETokenType.FUNCTION_KEYWORD, "max"),
-        new Token(ETokenType.OPEN, "("),
+        new Token(ETokenType.SYMBOL, "("),
         new Token(ETokenType.NUMBER, "1"),
         new Token(ETokenType.SYMBOL, ","),
         new Token(ETokenType.NUMBER, "2"),
         new Token(ETokenType.SYMBOL, ","),
         new Token(ETokenType.NUMBER, "3"),
-        new Token(ETokenType.CLOSE, ")"),
+        new Token(ETokenType.SYMBOL, ")"),
         new Token(ETokenType.SYMBOL, ","),
         new Token(ETokenType.SYMBOL, ","),
+        new Token(ETokenType.WORD, "[ACTIVITYID]"),
         new Token(ETokenType.LINE_COMMENT, "-- This is a comment as well")
     ));
   }

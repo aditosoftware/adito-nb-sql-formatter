@@ -43,21 +43,6 @@ public class Tokenizer implements ITokenizer<Token>
     // Read current char
     char currChar = text.charAt(pos);
 
-    // Handle OPEN and CLOSE Tokens
-    switch (currChar)
-    {
-      case '(':
-      case '[':
-      case '{':
-        pos++;
-        return new Token(ETokenType.OPEN, Character.toString(currChar));
-      case ')':
-      case ']':
-      case '}':
-        pos++;
-        return new Token(ETokenType.CLOSE, Character.toString(currChar));
-    }
-
     // Skip whitespaces
     if (Character.isWhitespace(currChar))
     {
@@ -67,7 +52,13 @@ public class Tokenizer implements ITokenizer<Token>
 
     // Tokenize strings
     if (ISQLConstants.STRING_CHARS.contains(currChar))
-      return _readString(currChar);
+      return _readEncapsulatedWord(currChar, currChar, ETokenType.STRING);
+
+    // Tokenize field char words
+    if (ISQLConstants.FIELD_CHARS_START.contains(currChar)) {
+      char endChar = ISQLConstants.FIELD_CHARS_END.get(ISQLConstants.FIELD_CHARS_START.indexOf(currChar));
+      return _readEncapsulatedWord(currChar, endChar, ETokenType.WORD);
+    }
 
     // Tokenize comments (ETokenType.COMMENT)
     if (pos + 1 < text.length())
@@ -135,19 +126,20 @@ public class Tokenizer implements ITokenizer<Token>
   }
 
   /**
-   * This function tokenizes a string and returns the corrosponding word token
-   * There is no string TokenType because it doesn't matter for formatting
+   * Tokenizes a encapsulated word e.g. a string or `FIELD_NAME`
    *
-   * @param stringChar the char that is used to indicate the string
-   * @return returns the word token holding the tokenized string
+   * @param pStart the start character
+   * @param pEnd the end character
+   * @param pTokenType the ETokenType witch should be used for the returned Token
+   * @return the Token with the specified type and text
    */
   @NotNull
-  private Token _readString(char stringChar)
+  private Token _readEncapsulatedWord(char pStart, char pEnd, @NotNull ETokenType pTokenType)
   {
     pos++;
-    String strText = _readWhile(ch -> ch != stringChar, false);
+    String strText = _readWhile(ch -> ch != pEnd, false);
     pos++;
-    return new Token(ETokenType.STRING, stringChar + strText + stringChar);
+    return new Token(pTokenType, pStart + strText + pEnd);
   }
 
   /**

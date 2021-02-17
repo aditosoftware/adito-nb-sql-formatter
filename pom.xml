@@ -12,7 +12,7 @@
 
   <groupId>de.adito.aditoweb.nbm</groupId>
   <artifactId>sql-formatter</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>nbm</packaging>
   <name>SQL Formatter</name>
 

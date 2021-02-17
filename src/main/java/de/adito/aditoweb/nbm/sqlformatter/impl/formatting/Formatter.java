@@ -85,35 +85,6 @@ public class Formatter implements IFormatter
   }
 
   /**
-   * Handles the Open Tocken
-   * Increases the indentation by a BLOCK level
-   * and inserts a new line
-   *
-   * @param pFmt the formatter
-   */
-  public static void handleOpen(@NotNull Formatter pFmt)
-  {
-    pFmt.text.singleSpace();
-    pFmt.text.write(pFmt.curr.getText());
-    pFmt.text.incIndent(EIndentLevel.BLOCK);
-    pFmt.text.singleNewline();
-  }
-
-  /**
-   * Handles the Close Tocken
-   * Decreases the indentation by a BLOCK level
-   * and inserts a new line
-   *
-   * @param pFmt the formatter
-   */
-  public static void handleClose(@NotNull Formatter pFmt)
-  {
-    pFmt.text.decIndent(EIndentLevel.BLOCK);
-    pFmt.text.singleNewline();
-    pFmt.text.write(pFmt.curr.getText());
-  }
-
-  /**
    * Handles the Symbol Tocken
    * Inserts whitespaces dependent on the type of Symbol
    *
@@ -123,6 +94,18 @@ public class Formatter implements IFormatter
   {
     switch (pFmt.curr.getText())
     {
+      case "(":
+        pFmt.text.singleSpace();
+        pFmt.text.write(pFmt.curr.getText());
+        pFmt.text.incIndent(EIndentLevel.BLOCK);
+        pFmt.text.singleNewline();
+        break;
+      case ")":
+        pFmt.text.decIndent(EIndentLevel.BLOCK);
+        pFmt.text.singleNewline();
+        pFmt.text.write(pFmt.curr.getText());
+        break;
+
       case ".":
         pFmt.text.write(pFmt.curr.getText());
         pFmt.text.noSpace();
@@ -165,7 +148,7 @@ public class Formatter implements IFormatter
     switch (pFmt.curr.getText().toUpperCase())
     {
       case "CASE":
-        if(pFmt.settings.caseWhenInSingleLine)
+        if (pFmt.settings.caseWhenInSingleLine)
           pFmt.text.increaseSingleLineMode();
         pFmt.text.singleSpace();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
@@ -175,7 +158,7 @@ public class Formatter implements IFormatter
         pFmt.text.decIndent(EIndentLevel.SWITCH);
         pFmt.text.singleNewline();
         pFmt.text.write(pFmt.curr.format(pFmt.settings));
-        if(pFmt.settings.caseWhenInSingleLine)
+        if (pFmt.settings.caseWhenInSingleLine)
           pFmt.text.decreaseSingleLineMode();
         break;
       default:
@@ -223,12 +206,10 @@ public class Formatter implements IFormatter
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
-
-    pFmt.curr = pFmt.tokenizer.next();
-    pFmt.curr.getType().formattingHandler.accept(pFmt);
-
-    pFmt.text.singleNewline();
-    pFmt.text.incIndent(EIndentLevel.KEYWORD);
+    pFmt._fmtBlock(() -> {
+      pFmt.text.singleNewline();
+      pFmt.text.incIndent(EIndentLevel.KEYWORD);
+    });
   }
 
   /**
@@ -255,5 +236,22 @@ public class Formatter implements IFormatter
   {
     pFmt.text.singleSpace();
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
+  }
+
+  private void _fmtBlock(@NotNull Runnable pPostAction)
+  {
+    while (true)
+    {
+      curr = tokenizer.next();
+      if (curr.getType() == ETokenType.WORD || (curr.getType() == ETokenType.SYMBOL && curr.getText().equals(".")))
+        curr.getType().formattingHandler.accept(this);
+      else
+      {
+        if (curr.getType().isKeyword == Boolean.TRUE)
+          pPostAction.run();
+        curr.getType().formattingHandler.accept(this);
+        return;
+      }
+    }
   }
 }

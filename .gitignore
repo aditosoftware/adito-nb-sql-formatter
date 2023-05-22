@@ -3,5 +3,6 @@
 !/.idea/inspectionProfiles
 !/.idea/runConfigurations
 !/.idea/vcs.xml
+!/.idea/misc.xml
 /target
 *.iml

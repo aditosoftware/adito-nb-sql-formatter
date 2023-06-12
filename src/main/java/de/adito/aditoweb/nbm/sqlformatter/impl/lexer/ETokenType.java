@@ -1,6 +1,7 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.lexer;
 
 import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
+import lombok.NonNull;
 import org.jetbrains.annotations.*;
 
 import java.util.function.*;
@@ -94,7 +95,7 @@ public enum ETokenType
    * @param pIsKeyword         defines the way how this token should be formatted
    * @param pFormattingHandler defines the entry point for formatting this token
    */
-  ETokenType(@Nullable Boolean pIsKeyword, @NotNull Consumer<Formatter> pFormattingHandler)
+  ETokenType(@Nullable Boolean pIsKeyword, @NonNull Consumer<Formatter> pFormattingHandler)
   {
     isKeyword = pIsKeyword;
     formattingHandler = pFormattingHandler;

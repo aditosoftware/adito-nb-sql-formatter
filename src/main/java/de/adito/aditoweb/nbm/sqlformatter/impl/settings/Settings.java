@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.settings;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.netbeans.api.editor.mimelookup.MimeLookup;
 import org.openide.util.NbPreferences;
 
@@ -68,7 +68,7 @@ public class Settings
    * @param pCopyToStringPlusRight Indicates whether the plus should be placed on the left/right of the line
    * @param pGapInsideQuotes       Indicates whether the whitespace gab should be places inside the quotes
    */
-  public Settings(@NotNull ELetterCaseMode pWordCaseMode, @NotNull ELetterCaseMode pKeywordCaseMode,
+  public Settings(@NonNull ELetterCaseMode pWordCaseMode, @NonNull ELetterCaseMode pKeywordCaseMode,
                   boolean pCaseWhenInSingleLine, boolean pNewlineBeforeComma,
                   boolean pCopyToStringPlusRight, boolean pGapInsideQuotes)
   {
@@ -87,7 +87,7 @@ public class Settings
    *
    * @return the loaded settings
    */
-  @NotNull
+  @NonNull
   public static Settings getSettings()
   {
     Settings defaultSetting = new Settings();
@@ -108,7 +108,7 @@ public class Settings
    *
    * @param settings the settings to store
    */
-  public static void setSettings(@NotNull Settings settings)
+  public static void setSettings(@NonNull Settings settings)
   {
     _PREFERENCES.put("wordCaseMode", settings.wordCaseMode.name());
     _PREFERENCES.put("keywordCaseMode", settings.keywordCaseMode.name());

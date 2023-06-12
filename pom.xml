@@ -28,18 +28,11 @@
       <version>4.13</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>org.jetbrains</groupId>
-      <artifactId>annotations</artifactId>
-      <version>13.0</version>
-      <scope>provided</scope>
-      <optional>true</optional>
-    </dependency>
     <!-- Lombok for additional annotations -->
     <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.22</version>
+      <groupId>de.adito.aditoweb</groupId>
+      <artifactId>adito-lombok-extended</artifactId>
+      <version>1.0.0</version>
       <scope>provided</scope>
       <optional>true</optional>
     </dependency>

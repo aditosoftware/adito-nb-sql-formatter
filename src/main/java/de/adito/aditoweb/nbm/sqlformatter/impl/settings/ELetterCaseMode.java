@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.settings;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.openide.util.NbBundle;
 
 import java.util.function.Function;
@@ -31,7 +31,7 @@ public enum ELetterCaseMode
    * @param pDescription Description of the settings option
    * @param pFmtFunc     Function used to format tokens
    */
-  ELetterCaseMode(@NotNull String pDescription, Function<String, String> pFmtFunc)
+  ELetterCaseMode(@NonNull String pDescription, Function<String, String> pFmtFunc)
   {
     description = pDescription;
     fmtFunc = pFmtFunc;
@@ -43,8 +43,8 @@ public enum ELetterCaseMode
    * @param target the target text
    * @return the formatted text
    */
-  @NotNull
-  public String format(@NotNull String target)
+  @NonNull
+  public String format(@NonNull String target)
   {
     if (fmtFunc == null)
       return target;

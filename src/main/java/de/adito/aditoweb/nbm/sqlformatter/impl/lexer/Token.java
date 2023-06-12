@@ -2,7 +2,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl.lexer;
 
 import de.adito.aditoweb.nbm.sqlformatter.api.IToken;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 import java.util.Objects;
 
@@ -29,7 +29,7 @@ public class Token implements IToken<ETokenType>
    * @param pType the type of the token
    * @param pText the text of the token, usually the text representation of the token (not formatted)
    */
-  public Token(@NotNull ETokenType pType, @NotNull String pText)
+  public Token(@NonNull ETokenType pType, @NonNull String pText)
   {
     type = pType;
     text = pText;
@@ -41,7 +41,7 @@ public class Token implements IToken<ETokenType>
    * @return the type of the token
    */
   @Override
-  @NotNull
+  @NonNull
   public ETokenType getType()
   {
     return type;
@@ -53,7 +53,7 @@ public class Token implements IToken<ETokenType>
    * @return the text of the token, usually the text representation of the token (not formatted)
    */
   @Override
-  @NotNull
+  @NonNull
   public String getText()
   {
     return text;
@@ -65,8 +65,8 @@ public class Token implements IToken<ETokenType>
    * @param pSettings the formatting settings
    * @return the formatted token in text form
    */
-  @NotNull
-  public String format(@NotNull Settings pSettings)
+  @NonNull
+  public String format(@NonNull Settings pSettings)
   {
     if (type.isKeyword == null)
       return text;

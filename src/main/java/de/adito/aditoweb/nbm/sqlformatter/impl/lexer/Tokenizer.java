@@ -1,6 +1,7 @@
 package de.adito.aditoweb.nbm.sqlformatter.impl.lexer;
 
 import de.adito.aditoweb.nbm.sqlformatter.api.*;
+import lombok.NonNull;
 import org.jetbrains.annotations.*;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class Tokenizer implements ITokenizer<Token>
    *
    * @param pText the text witch needs to be tokenized
    */
-  public Tokenizer(@NotNull String pText)
+  public Tokenizer(@NonNull String pText)
   {
     text = pText;
   }
@@ -33,7 +34,7 @@ public class Tokenizer implements ITokenizer<Token>
    * @return the next token
    */
   @Override
-  @NotNull
+  @NonNull
   public Token next()
   {
     // Checks weather the end of text is reached
@@ -133,8 +134,8 @@ public class Tokenizer implements ITokenizer<Token>
    * @param pTokenType the ETokenType witch should be used for the returned Token
    * @return the Token with the specified type and text
    */
-  @NotNull
-  private Token _readEncapsulatedWord(char pStart, char pEnd, @NotNull ETokenType pTokenType)
+  @NonNull
+  private Token _readEncapsulatedWord(char pStart, char pEnd, @NonNull ETokenType pTokenType)
   {
     pos++;
     String strText = _readWhile(ch -> ch != pEnd, false);
@@ -149,8 +150,8 @@ public class Tokenizer implements ITokenizer<Token>
    * @param comments   whether the function stop if it reaches a comment
    * @return returns the read text
    */
-  @NotNull
-  private String _readWhile(@NotNull Predicate<Character> pCheckFunc, boolean comments)
+  @NonNull
+  private String _readWhile(@NonNull Predicate<Character> pCheckFunc, boolean comments)
   {
     StringBuilder result = new StringBuilder();
     while (pos < text.length())
@@ -189,7 +190,7 @@ public class Tokenizer implements ITokenizer<Token>
    * @return returns a Token produces by pTokenType and the keyword (if a keyword as been found)
    */
   @Nullable
-  private Token _maybeKeyword(@NotNull List<String> pKeywords, @NotNull ETokenType pTokenType)
+  private Token _maybeKeyword(@NonNull List<String> pKeywords, @NonNull ETokenType pTokenType)
   {
     for (String keyword : pKeywords)
     {

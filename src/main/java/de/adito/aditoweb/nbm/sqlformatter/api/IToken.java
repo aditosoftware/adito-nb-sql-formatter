@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.api;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 /**
  * Representation for any kind of Token
@@ -15,7 +15,7 @@ public interface IToken<T>
    *
    * @return the type of the token
    */
-  @NotNull
+  @NonNull
   T getType();
 
   /**
@@ -23,6 +23,6 @@ public interface IToken<T>
    *
    * @return the original, unformatted text of the token
    */
-  @NotNull
+  @NonNull
   String getText();
 }

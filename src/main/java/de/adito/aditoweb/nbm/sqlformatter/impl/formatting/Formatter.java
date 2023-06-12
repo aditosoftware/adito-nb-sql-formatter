@@ -3,7 +3,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl.formatting;
 import de.adito.aditoweb.nbm.sqlformatter.api.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.lexer.*;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.Settings;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 /**
  * Implements SQL-Formatting functionality
@@ -38,7 +38,7 @@ public class Formatter implements IFormatter
    * @param pInputSQL The input SQL
    * @param pSettings The settings which are needed for formatting the SQL
    */
-  public Formatter(@NotNull String pInputSQL, @NotNull Settings pSettings)
+  public Formatter(@NonNull String pInputSQL, @NonNull Settings pSettings)
   {
     this(pInputSQL, pSettings, new TextBuilder<>(Settings.getIndentStr(), Settings.getNewlineStr()));
   }
@@ -50,7 +50,7 @@ public class Formatter implements IFormatter
    * @param pSettings The settings which are needed for formatting the SQL
    * @param pText     Overwrites the default TextBuilder
    */
-  public Formatter(@NotNull String pInputSQL, @NotNull Settings pSettings, @NotNull TextBuilder<EIndentLevel> pText)
+  public Formatter(@NonNull String pInputSQL, @NonNull Settings pSettings, @NonNull TextBuilder<EIndentLevel> pText)
   {
     tokenizer = new Tokenizer(pInputSQL);
     settings = pSettings;
@@ -67,7 +67,7 @@ public class Formatter implements IFormatter
    * @return The formatted SQL
    */
   @Override
-  @NotNull
+  @NonNull
   public String format()
   {
     while (true)
@@ -90,7 +90,7 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleSymbol(@NotNull Formatter pFmt)
+  public static void handleSymbol(@NonNull Formatter pFmt)
   {
     switch (pFmt.curr.getText())
     {
@@ -143,7 +143,7 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleKeyword(@NotNull Formatter pFmt)
+  public static void handleKeyword(@NonNull Formatter pFmt)
   {
     switch (pFmt.curr.getText().toUpperCase())
     {
@@ -173,7 +173,7 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleFunctionKeyword(@NotNull Formatter pFmt)
+  public static void handleFunctionKeyword(@NonNull Formatter pFmt)
   {
     handleDefault(pFmt);
     pFmt.text.noSpace();
@@ -186,7 +186,7 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleKWTopLevel(@NotNull Formatter pFmt)
+  public static void handleKWTopLevel(@NonNull Formatter pFmt)
   {
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
@@ -201,7 +201,7 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleKWLazyTopLevel(@NotNull Formatter pFmt)
+  public static void handleKWLazyTopLevel(@NonNull Formatter pFmt)
   {
     pFmt.text.singleNewline();
     pFmt.text.decIndent(EIndentLevel.KEYWORD);
@@ -219,7 +219,7 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleKWWrapping(@NotNull Formatter pFmt)
+  public static void handleKWWrapping(@NonNull Formatter pFmt)
   {
     pFmt.text.singleNewline();
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
@@ -232,13 +232,13 @@ public class Formatter implements IFormatter
    *
    * @param pFmt the formatter
    */
-  public static void handleDefault(@NotNull Formatter pFmt)
+  public static void handleDefault(@NonNull Formatter pFmt)
   {
     pFmt.text.singleSpace();
     pFmt.text.write(pFmt.curr.format(pFmt.settings));
   }
 
-  private void _fmtBlock(@NotNull Runnable pPostAction)
+  private void _fmtBlock(@NonNull Runnable pPostAction)
   {
     while (true)
     {

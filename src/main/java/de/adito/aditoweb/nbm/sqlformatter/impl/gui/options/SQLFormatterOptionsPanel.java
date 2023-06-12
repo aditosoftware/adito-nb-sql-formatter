@@ -2,7 +2,7 @@ package de.adito.aditoweb.nbm.sqlformatter.impl.gui.options;
 
 import de.adito.aditoweb.nbm.sqlformatter.impl.formatting.Formatter;
 import de.adito.aditoweb.nbm.sqlformatter.impl.settings.*;
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 import org.openide.text.CloneableEditorSupport;
 import org.openide.util.NbBundle;
 
@@ -105,7 +105,7 @@ public class SQLFormatterOptionsPanel extends JPanel
    * @param pPanel the target panel
    * @param pText the label text
    */
-  private void _addGroupLabel(@NotNull JPanel pPanel, @NotNull String pText)
+  private void _addGroupLabel(@NonNull JPanel pPanel, @NonNull String pText)
   {
     pPanel.add(Box.createRigidArea(new Dimension(0, 10)));
     JPanel componentPanel = new JPanel();
@@ -126,7 +126,7 @@ public class SQLFormatterOptionsPanel extends JPanel
    * @param pText the component description
    * @param pComponent the component witch will be added to the panel
    */
-  private void _addConfigComponent(@NotNull JPanel pPanel, @NotNull String pText, @NotNull Component pComponent)
+  private void _addConfigComponent(@NonNull JPanel pPanel, @NonNull String pText, @NonNull Component pComponent)
   {
     JPanel componentPanel = new JPanel();
     componentPanel.setLayout(new GridLayout(1, 1));
@@ -142,7 +142,7 @@ public class SQLFormatterOptionsPanel extends JPanel
    *
    * @return the settings
    */
-  @NotNull
+  @NonNull
   public Settings getSettings()
   {
     return new Settings(
@@ -162,7 +162,7 @@ public class SQLFormatterOptionsPanel extends JPanel
    *
    * @param pSettings The settings to set
    */
-  public void setSettings(@NotNull Settings pSettings)
+  public void setSettings(@NonNull Settings pSettings)
   {
     wordCaseMode.setSelectedItem(pSettings.wordCaseMode);
     keywordCaseMode.setSelectedItem(pSettings.keywordCaseMode);

@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.api;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 import java.util.Stack;
 
@@ -56,7 +56,7 @@ public class TextBuilder<T extends Enum<?>>
    * @param pIndentStr  String used for indentation
    * @param pNewlineStr String used for new lines
    */
-  public TextBuilder(@NotNull String pIndentStr, @NotNull String pNewlineStr)
+  public TextBuilder(@NonNull String pIndentStr, @NonNull String pNewlineStr)
   {
     indentStr = pIndentStr;
     newlineStr = pNewlineStr;
@@ -158,7 +158,7 @@ public class TextBuilder<T extends Enum<?>>
    *
    * @param pText the text which will be written to the StringBuilder
    */
-  public void write(@NotNull String pText)
+  public void write(@NonNull String pText)
   {
     spaceFlag = false;
     if (newlineFlag)
@@ -176,7 +176,7 @@ public class TextBuilder<T extends Enum<?>>
    *
    * @return the formatted SQL as String
    */
-  @NotNull
+  @NonNull
   public String finish()
   {
     return builder.toString().trim();

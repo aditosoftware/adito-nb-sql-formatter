@@ -1,6 +1,6 @@
 package de.adito.aditoweb.nbm.sqlformatter.api;
 
-import org.jetbrains.annotations.NotNull;
+import lombok.NonNull;
 
 /**
  * Provides an interface, for implementing any kind of Formatter
@@ -14,6 +14,6 @@ public interface IFormatter
    *
    * @return returns the formatted 'code'
    */
-  @NotNull
+  @NonNull
   String format();
 }
